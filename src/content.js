@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  if (window.__jsonViewLoaded) return;
+  if (window.__tidyJsonLoaded) return;
 
   function detectJSON() {
     const ct = (document.contentType || '').toLowerCase();
@@ -35,7 +35,7 @@
     return;
   }
 
-  window.__jsonViewLoaded = true;
+  window.__tidyJsonLoaded = true;
 
   document.documentElement.classList.add('jv-active');
   document.body.classList.add('jv-active');
