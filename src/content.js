@@ -7,7 +7,9 @@
     const ct = (document.contentType || '').toLowerCase();
     const isJSONMime = ct.includes('application/json') ||
                        ct.includes('text/json') ||
-                       ct.includes('+json');
+                       ct.includes('+json') ||
+                       ct.includes('ndjson') ||
+                       ct.includes('jsonl');
 
     if (isJSONMime) {
       const pre = document.querySelector('body > pre');
@@ -25,17 +27,44 @@
     return null;
   }
 
+  // Falls back to JSON Lines: one object or array per line
+  function parseJSON(text) {
+    try {
+      return JSON.parse(text);
+    } catch (err) {
+      const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+      if (lines.length < 2 || !lines.every((line) => line[0] === '{' || line[0] === '[')) throw err;
+      return lines.map((line) => JSON.parse(line));
+    }
+  }
+
   const rawText = detectJSON();
   if (!rawText) return;
 
   let parsedData;
   try {
-    parsedData = JSON.parse(rawText);
+    parsedData = parseJSON(rawText);
   } catch (err) {
     return;
   }
 
   window.__prettyJasonLoaded = true;
+
+  const isHTTP = location.protocol === 'http:' || location.protocol === 'https:';
+
+  function formatBytes(n) {
+    if (n < 1024) return `${n} B`;
+    const units = ['KB', 'MB', 'GB'];
+    let i = 0;
+    n /= 1024;
+    while (n >= 1024 && i < units.length - 1) {
+      n /= 1024;
+      i++;
+    }
+    return `${n.toFixed(1)} ${units[i]}`;
+  }
+
+  const payloadSize = formatBytes(new Blob([rawText]).size);
 
   const root = document.documentElement;
   root.classList.add('jv-active');
@@ -147,6 +176,7 @@
 
   const barMain = el('div', { id: 'jv-bar-main' }, [
     tabList,
+    el('span', { id: 'jv-size', className: 'jv-meta', title: 'Payload size', text: payloadSize }),
     el('div', { id: 'jv-actions' }, [filterWrap, mobileFilterBtn, collapseBtn, expandBtn, copyBtn, themeBtn])
   ]);
 
@@ -266,7 +296,63 @@
     return value === null ? 'null' : String(value);
   }
 
-  function buildNode(key, value, isLast, isRoot = false) {
+  const IDENTIFIER = /^[A-Za-z_$][A-Za-z0-9_$]*$/;
+
+  // JavaScript accessor path: user.name, items[0], headers["content-type"]
+  function childPath(path, key) {
+    if (typeof key === 'number') return `${path}[${key}]`;
+    if (IDENTIFIER.test(key)) return path ? `${path}.${key}` : key;
+    return `${path}[${JSON.stringify(key)}]`;
+  }
+
+  let flashedKey = null;
+  let flashTimer = null;
+
+  function flashCopied(keySpan) {
+    clearTimeout(flashTimer);
+    if (flashedKey) flashedKey.classList.remove('jv-copied');
+    flashedKey = keySpan;
+    keySpan.classList.add('jv-copied');
+    flashTimer = setTimeout(() => keySpan.classList.remove('jv-copied'), 900);
+  }
+
+  const COLOR = /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$|^(?:rgb|hsl|oklch)a?\([^)]+\)$/i;
+  const ISO_DATE = /^\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:?\d{2})?)?$/;
+  // Unix epochs between 2000-01-01 and 2100-01-01
+  const EPOCH_MIN = 946684800;
+  const EPOCH_MAX = 4102444800;
+
+  function linkHref(value) {
+    if (value.startsWith('http://') || value.startsWith('https://')) return value;
+    // Root-relative paths like /v2/openapi.json; // and /\ would point at another host
+    if (isHTTP && /^\/[^/\\\s]\S*$/.test(value)) return new URL(value, location.href).href;
+    return null;
+  }
+
+  function timestampDate(value) {
+    let date = null;
+    if (typeof value === 'number') {
+      if (value >= EPOCH_MIN && value <= EPOCH_MAX) date = new Date(value * 1000);
+      else if (Number.isInteger(value) && value >= EPOCH_MIN * 1000 && value <= EPOCH_MAX * 1000) date = new Date(value);
+    } else if (typeof value === 'string' && ISO_DATE.test(value)) {
+      date = new Date(value);
+    }
+    return date && !Number.isNaN(date.getTime()) ? date : null;
+  }
+
+  const localDateFormat = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'long' });
+  const relativeFormat = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto' });
+  const RELATIVE_UNITS = [['year', 31536000], ['month', 2592000], ['week', 604800], ['day', 86400], ['hour', 3600], ['minute', 60]];
+
+  function relativeTime(date) {
+    const seconds = (date.getTime() - Date.now()) / 1000;
+    for (const [unit, size] of RELATIVE_UNITS) {
+      if (Math.abs(seconds) >= size) return relativeFormat.format(Math.round(seconds / size), unit);
+    }
+    return relativeFormat.format(Math.round(seconds), 'second');
+  }
+
+  function buildNode(key, value, isLast, isRoot = false, path = '') {
     const node = document.createElement('div');
     node.className = 'jv-node' + (isRoot ? ' jv-root' : '');
 
@@ -288,7 +374,12 @@
       toggle.textContent = '▼';
       toggle.addEventListener('click', (e) => {
         e.stopPropagation();
-        setNodeCollapsed(node, !node.classList.contains('jv-collapsed'));
+        const collapsed = !node.classList.contains('jv-collapsed');
+        setNodeCollapsed(node, collapsed);
+        // Option-click folds or unfolds the whole branch, like Finder
+        if (e.altKey) {
+          for (const children of node.querySelectorAll('.jv-children')) setNodeCollapsed(children.parentElement, collapsed);
+        }
       });
       line.appendChild(toggle);
     } else {
@@ -301,6 +392,13 @@
       const keySpan = document.createElement('span');
       keySpan.className = 'jv-key';
       keySpan.textContent = `"${key}"`;
+      keySpan.title = `${path} (click to copy path, Option-click to copy value)`;
+      keySpan.addEventListener('click', (e) => {
+        // Leave the clipboard alone when the user is selecting text
+        if (!window.getSelection().isCollapsed) return;
+        copyText(e.altKey ? (typeof value === 'string' ? value : JSON.stringify(value, null, 2)) : path);
+        flashCopied(keySpan);
+      });
       line.appendChild(keySpan);
 
       const colon = document.createElement('span');
@@ -332,7 +430,7 @@
       childrenContainer.className = 'jv-children';
       childrenContainer.addEventListener('beforematch', onBeforeMatch);
       entries.forEach(([k, v], idx) => {
-        childrenContainer.appendChild(buildNode(k, v, idx === count - 1));
+        childrenContainer.appendChild(buildNode(k, v, idx === count - 1, false, childPath(path, isArray ? idx : k)));
       });
 
       node.appendChild(line);
@@ -360,15 +458,22 @@
       const valSpan = document.createElement('span');
       if (typeof value === 'string') {
         valSpan.className = 'jv-string';
-        if (value.startsWith('http://') || value.startsWith('https://')) {
+        const href = linkHref(value);
+        if (href) {
           const a = document.createElement('a');
-          a.href = value;
+          a.href = href;
           a.target = '_blank';
           a.rel = 'noopener noreferrer';
           a.textContent = value;
           valSpan.append('"', a, '"');
         } else {
-          valSpan.textContent = `"${value}"`;
+          if (COLOR.test(value) && CSS.supports('color', value)) {
+            const swatch = document.createElement('span');
+            swatch.className = 'jv-swatch';
+            swatch.style.backgroundColor = value;
+            valSpan.append(swatch);
+          }
+          valSpan.append(`"${value}"`);
         }
       } else if (typeof value === 'number') {
         valSpan.className = 'jv-number';
@@ -379,6 +484,12 @@
       } else if (value === null) {
         valSpan.className = 'jv-null';
         valSpan.textContent = 'null';
+      }
+
+      const date = timestampDate(value);
+      if (date) {
+        valSpan.classList.add('jv-timestamp');
+        valSpan.title = `${date.toISOString()} · Local: ${localDateFormat.format(date)} (${relativeTime(date)})`;
       }
 
       line.appendChild(valSpan);
@@ -571,7 +682,7 @@
       : 'jv-status-other';
     const pill = el('div', { className: `jv-status ${statusClass}` }, [
       el('span', { className: 'jv-status-dot', 'aria-hidden': 'true' }),
-      status
+      `${status} · ${payloadSize}`
     ]);
 
     const rows = pairs.map(([name, value]) => el('tr', {
@@ -591,7 +702,7 @@
   function loadHeadersOnce() {
     if (headersPromise) return headersPromise;
 
-    if (location.protocol !== 'http:' && location.protocol !== 'https:') {
+    if (!isHTTP) {
       headersText = 'Headers are only available over HTTP/HTTPS.';
       panels.headers.replaceChildren(notice(headersText));
       headersPromise = Promise.resolve();
