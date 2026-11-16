@@ -1,6 +1,6 @@
 # Tidy JSON
 
-A browser extension that tidies JSON documents into a clean, collapsible tree.
+A browser extension that formats and inspects JSON responses with a collapsible tree, raw view, HTTP headers, and instant filtering.
 
 ## Features
 

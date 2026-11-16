@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Tidy JSON",
   "version": "0.1.0",
-  "description": "Tidy up JSON documents into a clean, collapsible tree.",
+  "description": "Format and inspect JSON responses with a collapsible tree, raw view, HTTP headers, and instant filtering.",
   "icons": {
     "16": "icons/icon-16.png",
     "32": "icons/icon-32.png",
