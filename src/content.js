@@ -37,129 +37,228 @@
 
   window.__tidyJsonLoaded = true;
 
-  document.documentElement.classList.add('jv-active');
+  const root = document.documentElement;
+  root.classList.add('jv-active');
   document.body.classList.add('jv-active');
 
-  // Tint Safari desktop & mobile chrome to match Catppuccin theme
   let head = document.head;
   if (!head) {
     head = document.createElement('head');
-    document.documentElement.insertBefore(head, document.body);
+    root.insertBefore(head, document.body);
   }
+
+  if (!head.querySelector('meta[name="viewport"]')) {
+    const viewport = document.createElement('meta');
+    viewport.name = 'viewport';
+    viewport.content = 'width=device-width, initial-scale=1, viewport-fit=cover';
+    head.appendChild(viewport);
+  }
+
+  // Tint Safari chrome to match the bar
+  const LIGHT_TINT = '#e6e9ef';
+  const DARK_TINT = '#181825';
   const lightMeta = document.createElement('meta');
   lightMeta.name = 'theme-color';
-  lightMeta.content = '#eff1f5';
-  lightMeta.media = '(prefers-color-scheme: light)';
-
   const darkMeta = document.createElement('meta');
   darkMeta.name = 'theme-color';
-  darkMeta.content = '#1e1e2e';
-  darkMeta.media = '(prefers-color-scheme: dark)';
-
   head.appendChild(lightMeta);
   head.appendChild(darkMeta);
 
-  const container = document.createElement('div');
-  container.id = 'jv-container';
-
+  const svg = (body) => `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
   const ICONS = {
-    code: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>',
-    braces: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></svg>',
-    copy: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>',
-    check: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
-    sunMoon: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"/><path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715"/><path d="M16 12a4 4 0 0 0-4-4"/><path d="m19 5-1.256 1.256"/><path d="M20 12h2"/></svg>',
-    sun: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>',
-    moon: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>'
+    search: svg('<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>'),
+    collapse: svg('<path d="m7 20 5-5 5 5"/><path d="m7 4 5 5 5-5"/>'),
+    expand: svg('<path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/>'),
+    copy: svg('<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>'),
+    check: svg('<path d="M20 6 9 17l-5-5"/>'),
+    sunMoon: svg('<path d="M12 2v2"/><path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715"/><path d="M16 12a4 4 0 0 0-4-4"/><path d="m19 5-1.256 1.256"/><path d="M20 12h2"/>'),
+    sun: svg('<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>'),
+    moon: svg('<path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/>')
   };
 
-  // Subtle floating action buttons in the corner
-  const actions = document.createElement('div');
-  actions.id = 'jv-actions';
+  function el(tag, props, children) {
+    const node = document.createElement(tag);
+    for (const [k, v] of Object.entries(props || {})) {
+      if (k === 'className') node.className = v;
+      else if (k === 'text') node.textContent = v;
+      else if (k === 'html') node.innerHTML = v;
+      else node.setAttribute(k, v);
+    }
+    for (const child of children || []) node.append(child);
+    return node;
+  }
 
-  const themeBtn = document.createElement('button');
-  themeBtn.className = 'jv-action-btn';
+  function actionButton(id, label, icon) {
+    return el('button', { type: 'button', id, className: 'jv-btn', title: label, 'aria-label': label }, [
+      el('span', { className: 'jv-btn-icon', html: icon }),
+      el('span', { className: 'jv-btn-label', text: label })
+    ]);
+  }
 
-  let currentTheme = localStorage.getItem('jv-theme') || 'auto';
+  // ---------- Layout ----------
+
+  const TABS = ['json', 'raw', 'headers'];
+  const TAB_LABELS = { json: 'JSON', raw: 'Raw', headers: 'Headers' };
+
+  const tabButtons = {};
+  const tabList = el('div', { className: 'jv-tabs', role: 'tablist', 'aria-label': 'JSON views' });
+  for (const name of TABS) {
+    const tab = el('button', {
+      type: 'button',
+      role: 'tab',
+      id: `jv-tab-${name}`,
+      'aria-selected': String(name === 'json'),
+      'aria-controls': `jv-panel-${name}`,
+      tabindex: name === 'json' ? '0' : '-1',
+      className: 'jv-tab',
+      text: TAB_LABELS[name]
+    });
+    tabButtons[name] = tab;
+    tabList.append(tab);
+  }
+
+  const filterInput = el('input', {
+    id: 'jv-filter',
+    type: 'search',
+    placeholder: 'Filter…',
+    'aria-label': 'Filter',
+    autocomplete: 'off',
+    autocapitalize: 'off',
+    spellcheck: 'false'
+  });
+  const filterWrap = el('div', { id: 'jv-filter-wrap' }, [
+    el('span', { className: 'jv-filter-icon', html: ICONS.search }),
+    filterInput,
+    el('kbd', { className: 'jv-kbd', 'aria-hidden': 'true', text: '/' })
+  ]);
+
+  const mobileFilterBtn = el('button', {
+    type: 'button',
+    id: 'jv-mobile-filter-btn',
+    className: 'jv-btn',
+    title: 'Filter',
+    'aria-label': 'Filter',
+    html: `<span class="jv-btn-icon">${ICONS.search}</span>`
+  });
+  const collapseBtn = actionButton('jv-collapse-all', 'Collapse All', ICONS.collapse);
+  const expandBtn = actionButton('jv-expand-all', 'Expand All', ICONS.expand);
+  const copyBtn = actionButton('jv-copy', 'Copy', ICONS.copy);
+  const themeBtn = el('button', { type: 'button', id: 'jv-theme', className: 'jv-btn' });
+
+  const barMain = el('div', { id: 'jv-bar-main' }, [
+    tabList,
+    el('div', { id: 'jv-actions' }, [filterWrap, mobileFilterBtn, collapseBtn, expandBtn, copyBtn, themeBtn])
+  ]);
+
+  const mobileInput = el('input', {
+    id: 'jv-mobile-filter-input',
+    type: 'search',
+    placeholder: 'Filter…',
+    'aria-label': 'Filter',
+    autocomplete: 'off',
+    autocapitalize: 'off',
+    spellcheck: 'false',
+    enterkeyhint: 'search'
+  });
+  const mobileDone = el('button', { type: 'button', id: 'jv-mobile-filter-done', text: 'Done' });
+  const barSearch = el('div', { id: 'jv-bar-search', hidden: '' }, [
+    el('div', { className: 'jv-mobile-field' }, [el('span', { className: 'jv-filter-icon', html: ICONS.search }), mobileInput]),
+    mobileDone
+  ]);
+
+  const bar = el('header', { id: 'jv-bar' }, [barMain, barSearch]);
+
+  const treeContainer = el('div', { id: 'jv-tree' });
+  const emptyFilter = el('p', { id: 'jv-empty-filter', className: 'jv-notice', hidden: '', text: 'No matching entries' });
+  const rawContainer = el('pre', { id: 'jv-raw', text: rawText });
+
+  const panels = {
+    json: el('section', { id: 'jv-panel-json', role: 'tabpanel', 'aria-labelledby': 'jv-tab-json' }, [treeContainer, emptyFilter]),
+    raw: el('section', { id: 'jv-panel-raw', role: 'tabpanel', 'aria-labelledby': 'jv-tab-raw', hidden: '' }, [rawContainer]),
+    headers: el('section', { id: 'jv-panel-headers', role: 'tabpanel', 'aria-labelledby': 'jv-tab-headers', hidden: '' })
+  };
+
+  const container = el('div', { id: 'jv-container', 'data-tab': 'json' }, [
+    bar,
+    el('main', { id: 'jv-content' }, [panels.json, panels.raw, panels.headers])
+  ]);
+
+  document.body.replaceChildren(container);
+
+  // ---------- Theme ----------
+
+  function readTheme() {
+    try { return localStorage.getItem('jv-theme') || 'auto'; } catch (e) { return 'auto'; }
+  }
+
+  function saveTheme(theme) {
+    try { localStorage.setItem('jv-theme', theme); } catch (e) { /* storage blocked */ }
+  }
+
+  const THEME_LABELS = { auto: 'Auto', light: 'Light', dark: 'Dark' };
+  const THEME_ICONS = { auto: ICONS.sunMoon, light: ICONS.sun, dark: ICONS.moon };
+  let currentTheme = readTheme();
 
   function applyTheme(theme) {
-    currentTheme = theme;
-    document.documentElement.classList.remove('jv-theme-light', 'jv-theme-dark');
+    currentTheme = THEME_LABELS[theme] ? theme : 'auto';
+    root.classList.remove('jv-theme-light', 'jv-theme-dark');
 
-    if (theme === 'light') {
-      document.documentElement.classList.add('jv-theme-light');
-      lightMeta.removeAttribute('media');
-      darkMeta.removeAttribute('media');
-      lightMeta.content = '#eff1f5';
-      darkMeta.content = '#eff1f5';
-      themeBtn.innerHTML = ICONS.sun;
-      themeBtn.title = 'Theme: Light (click for dark)';
-      themeBtn.setAttribute('aria-label', 'Theme: Light (click for dark)');
-    } else if (theme === 'dark') {
-      document.documentElement.classList.add('jv-theme-dark');
-      lightMeta.removeAttribute('media');
-      darkMeta.removeAttribute('media');
-      lightMeta.content = '#1e1e2e';
-      darkMeta.content = '#1e1e2e';
-      themeBtn.innerHTML = ICONS.moon;
-      themeBtn.title = 'Theme: Dark (click for auto)';
-      themeBtn.setAttribute('aria-label', 'Theme: Dark (click for auto)');
-    } else {
+    if (currentTheme === 'auto') {
       lightMeta.media = '(prefers-color-scheme: light)';
-      lightMeta.content = '#eff1f5';
+      lightMeta.content = LIGHT_TINT;
       darkMeta.media = '(prefers-color-scheme: dark)';
-      darkMeta.content = '#1e1e2e';
-      themeBtn.innerHTML = ICONS.sunMoon;
-      themeBtn.title = 'Theme: Auto (click for light)';
-      themeBtn.setAttribute('aria-label', 'Theme: Auto (click for light)');
+      darkMeta.content = DARK_TINT;
+    } else {
+      root.classList.add(`jv-theme-${currentTheme}`);
+      const tint = currentTheme === 'light' ? LIGHT_TINT : DARK_TINT;
+      lightMeta.removeAttribute('media');
+      darkMeta.removeAttribute('media');
+      lightMeta.content = tint;
+      darkMeta.content = tint;
     }
+
+    const label = `Theme: ${THEME_LABELS[currentTheme]}`;
+    themeBtn.innerHTML = `<span class="jv-btn-icon">${THEME_ICONS[currentTheme]}</span>`;
+    themeBtn.title = label;
+    themeBtn.setAttribute('aria-label', label);
   }
 
   themeBtn.addEventListener('click', () => {
-    let nextTheme = 'auto';
-    if (currentTheme === 'auto') nextTheme = 'light';
-    else if (currentTheme === 'light') nextTheme = 'dark';
-    else if (currentTheme === 'dark') nextTheme = 'auto';
-    localStorage.setItem('jv-theme', nextTheme);
-    applyTheme(nextTheme);
+    const next = { auto: 'light', light: 'dark', dark: 'auto' }[currentTheme];
+    saveTheme(next);
+    // Swap colors in one frame instead of animating every element
+    root.classList.add('jv-no-transitions');
+    applyTheme(next);
+    void root.offsetHeight;
+    requestAnimationFrame(() => root.classList.remove('jv-no-transitions'));
   });
 
   applyTheme(currentTheme);
 
-  const viewModeBtn = document.createElement('button');
-  viewModeBtn.className = 'jv-action-btn';
-  viewModeBtn.innerHTML = ICONS.code;
-  viewModeBtn.title = 'View raw';
-  viewModeBtn.setAttribute('aria-label', 'View raw');
+  // ---------- Tree ----------
 
-  const copyBtn = document.createElement('button');
-  copyBtn.className = 'jv-action-btn';
-  copyBtn.innerHTML = ICONS.copy;
-  copyBtn.title = 'Copy JSON';
-  copyBtn.setAttribute('aria-label', 'Copy JSON');
+  function setNodeCollapsed(node, collapsed) {
+    const children = node.querySelector(':scope > .jv-children');
+    if (!children) return;
+    node.classList.toggle('jv-collapsed', collapsed);
+    node.querySelector(':scope > .jv-line > .jv-toggle').classList.toggle('collapsed', collapsed);
+    if (collapsed) children.setAttribute('hidden', 'until-found');
+    else children.removeAttribute('hidden');
+  }
 
-  actions.appendChild(themeBtn);
-  actions.appendChild(viewModeBtn);
-  actions.appendChild(copyBtn);
+  // Browser find matched text inside a collapsed branch: open every collapsed ancestor
+  function onBeforeMatch(e) {
+    let node = e.currentTarget.parentElement;
+    while (node) {
+      if (node.classList.contains('jv-collapsed')) setNodeCollapsed(node, false);
+      node = node.parentElement && node.parentElement.closest('.jv-node');
+    }
+  }
 
-  const contentArea = document.createElement('main');
-  contentArea.id = 'jv-content';
+  function primitiveText(value) {
+    return value === null ? 'null' : String(value);
+  }
 
-  const treeContainer = document.createElement('div');
-  treeContainer.id = 'jv-tree';
-
-  const rawContainer = document.createElement('pre');
-  rawContainer.id = 'jv-raw';
-  rawContainer.textContent = rawText;
-
-  contentArea.appendChild(treeContainer);
-  contentArea.appendChild(rawContainer);
-
-  container.appendChild(actions);
-  container.appendChild(contentArea);
-
-  document.body.replaceChildren(container);
-
-  // Recursive Tree Builder
   function buildNode(key, value, isLast, isRoot = false) {
     const node = document.createElement('div');
     node.className = 'jv-node' + (isRoot ? ' jv-root' : '');
@@ -167,17 +266,22 @@
     const line = document.createElement('div');
     line.className = 'jv-line';
 
-    const isObject = value !== null && typeof value === 'object' && !Array.isArray(value);
     const isArray = Array.isArray(value);
+    const isObject = value !== null && typeof value === 'object' && !isArray;
+    const isContainer = isObject || isArray;
 
-    if (isObject || isArray) {
+    node.dataset.selfMatch = [
+      key === null ? '' : key,
+      isContainer ? '' : primitiveText(value)
+    ].join('\n').toLowerCase();
+
+    if (isContainer) {
       const toggle = document.createElement('span');
       toggle.className = 'jv-toggle';
       toggle.textContent = '▼';
       toggle.addEventListener('click', (e) => {
         e.stopPropagation();
-        node.classList.toggle('jv-collapsed');
-        toggle.classList.toggle('collapsed');
+        setNodeCollapsed(node, !node.classList.contains('jv-collapsed'));
       });
       line.appendChild(toggle);
     } else {
@@ -198,40 +302,31 @@
       line.appendChild(colon);
     }
 
-    if (isObject || isArray) {
+    if (isContainer) {
       const openBracket = document.createElement('span');
       openBracket.className = 'jv-bracket';
       openBracket.textContent = isArray ? '[' : '{';
       line.appendChild(openBracket);
 
+      const entries = isArray ? value.map((item) => [null, item]) : Object.entries(value);
+
       const ellipsis = document.createElement('span');
       ellipsis.className = 'jv-ellipsis';
-      const itemsCount = isArray ? value.length : Object.keys(value).length;
-      const noun = isArray ? (itemsCount === 1 ? 'item' : 'items') : (itemsCount === 1 ? 'key' : 'keys');
-      ellipsis.textContent = `${itemsCount} ${noun}`;
+      const count = entries.length;
+      const noun = isArray ? (count === 1 ? 'item' : 'items') : (count === 1 ? 'key' : 'keys');
+      ellipsis.textContent = `${count} ${noun}`;
       ellipsis.addEventListener('click', (e) => {
         e.stopPropagation();
-        node.classList.remove('jv-collapsed');
-        const t = node.querySelector('.jv-toggle');
-        if (t) t.classList.remove('collapsed');
+        setNodeCollapsed(node, false);
       });
       line.appendChild(ellipsis);
 
       const childrenContainer = document.createElement('div');
       childrenContainer.className = 'jv-children';
-
-      const entries = isArray ? value : Object.entries(value);
-      const total = isArray ? value.length : entries.length;
-
-      if (isArray) {
-        value.forEach((item, idx) => {
-          childrenContainer.appendChild(buildNode(null, item, idx === total - 1));
-        });
-      } else {
-        entries.forEach(([k, v], idx) => {
-          childrenContainer.appendChild(buildNode(k, v, idx === total - 1));
-        });
-      }
+      childrenContainer.addEventListener('beforematch', onBeforeMatch);
+      entries.forEach(([k, v], idx) => {
+        childrenContainer.appendChild(buildNode(k, v, idx === count - 1));
+      });
 
       node.appendChild(line);
       node.appendChild(childrenContainer);
@@ -254,7 +349,6 @@
         closeLine.appendChild(comma);
       }
       node.appendChild(closeLine);
-
     } else {
       const valSpan = document.createElement('span');
       if (typeof value === 'string') {
@@ -294,52 +388,295 @@
     return node;
   }
 
-  // Render tree
-  treeContainer.appendChild(buildNode(null, parsedData, true, true));
+  const rootNode = buildNode(null, parsedData, true, true);
+  treeContainer.appendChild(rootNode);
 
-  // Toggle Raw / Formatted
-  let isRaw = false;
-  viewModeBtn.addEventListener('click', () => {
-    isRaw = !isRaw;
-    if (isRaw) {
-      treeContainer.style.display = 'none';
-      rawContainer.style.display = 'block';
-      viewModeBtn.innerHTML = ICONS.braces;
-      viewModeBtn.title = 'View formatted';
-      viewModeBtn.setAttribute('aria-label', 'View formatted');
-      viewModeBtn.classList.add('active');
-    } else {
-      treeContainer.style.display = 'block';
-      rawContainer.style.display = 'none';
-      viewModeBtn.innerHTML = ICONS.code;
-      viewModeBtn.title = 'View raw';
-      viewModeBtn.setAttribute('aria-label', 'View raw');
-      viewModeBtn.classList.remove('active');
+  function containerNodes() {
+    return [...treeContainer.querySelectorAll('.jv-children')].map((children) => children.parentElement);
+  }
+
+  function childNodesOf(node) {
+    const children = node.querySelector(':scope > .jv-children');
+    return children ? children.children : [];
+  }
+
+  collapseBtn.addEventListener('click', () => {
+    // Keep the root open so the top-level shape stays readable
+    for (const node of containerNodes()) setNodeCollapsed(node, node !== rootNode);
+  });
+
+  expandBtn.addEventListener('click', () => {
+    for (const node of containerNodes()) setNodeCollapsed(node, false);
+  });
+
+  // ---------- Filter ----------
+
+  let filterQuery = '';
+  let collapsedBeforeFilter = null;
+
+  // Returns true when the node or a descendant matches. keepAll shows a matched container's subtree.
+  function filterNode(node, q, keepAll) {
+    const selfHit = node.dataset.selfMatch.includes(q);
+    let descendantHit = false;
+    let lastVisible = null;
+    for (const child of childNodesOf(node)) {
+      if (filterNode(child, q, keepAll || selfHit)) descendantHit = true;
+      child.classList.remove('jv-tail');
+      if (!child.hidden) lastVisible = child;
+    }
+    if (lastVisible) lastVisible.classList.add('jv-tail');
+    if (descendantHit) setNodeCollapsed(node, false);
+    const hit = selfHit || descendantHit;
+    node.hidden = !(hit || keepAll);
+    return hit;
+  }
+
+  function filterTree(q) {
+    if (q && !collapsedBeforeFilter) {
+      collapsedBeforeFilter = new Set(treeContainer.querySelectorAll('.jv-node.jv-collapsed'));
+    }
+    if (collapsedBeforeFilter) {
+      for (const node of containerNodes()) setNodeCollapsed(node, collapsedBeforeFilter.has(node));
+    }
+
+    if (q) {
+      emptyFilter.hidden = filterNode(rootNode, q, false);
+      return;
+    }
+
+    for (const node of treeContainer.querySelectorAll('.jv-node[hidden]')) node.hidden = false;
+    for (const node of treeContainer.querySelectorAll('.jv-tail')) node.classList.remove('jv-tail');
+    collapsedBeforeFilter = null;
+    emptyFilter.hidden = true;
+  }
+
+  function filterHeaders(q) {
+    const rows = panels.headers.querySelectorAll('.jv-header-row');
+    const empty = panels.headers.querySelector('.jv-headers-empty');
+    if (!rows.length || !empty) return;
+    let shown = 0;
+    for (const row of rows) {
+      row.hidden = !row.dataset.matchText.includes(q);
+      if (!row.hidden) shown++;
+    }
+    empty.hidden = shown > 0;
+  }
+
+  function applyFilter(query) {
+    filterQuery = query;
+    const q = query.trim().toLowerCase();
+    if (filterInput.value !== query) filterInput.value = query;
+    if (mobileInput.value !== query) mobileInput.value = query;
+    filterTree(q);
+    filterHeaders(q);
+  }
+
+  for (const input of [filterInput, mobileInput]) {
+    input.addEventListener('input', () => applyFilter(input.value));
+  }
+
+  const narrow = window.matchMedia('(max-width: 639px)');
+
+  function openMobileSearch() {
+    barMain.hidden = true;
+    barSearch.hidden = false;
+    mobileInput.value = filterQuery;
+    mobileInput.focus();
+  }
+
+  function closeMobileSearch() {
+    barSearch.hidden = true;
+    barMain.hidden = false;
+  }
+
+  function clearFilter() {
+    applyFilter('');
+    closeMobileSearch();
+    if (document.activeElement === filterInput || document.activeElement === mobileInput) {
+      document.activeElement.blur();
+    }
+  }
+
+  mobileFilterBtn.addEventListener('click', openMobileSearch);
+  mobileDone.addEventListener('click', clearFilter);
+
+  // Widening past the breakpoint returns to the desktop bar, keeping the query
+  narrow.addEventListener('change', (e) => {
+    if (!e.matches && !barSearch.hidden) closeMobileSearch();
+  });
+
+  function isEditable(target) {
+    return target instanceof Element &&
+      (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName));
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey && !isEditable(e.target)) {
+      if (activeTab === 'raw') return;
+      e.preventDefault();
+      if (narrow.matches) {
+        openMobileSearch();
+      } else {
+        filterInput.focus();
+        filterInput.select();
+      }
+    } else if (e.key === 'Escape') {
+      const inFilter = e.target === filterInput || e.target === mobileInput;
+      if (inFilter || filterQuery || !barSearch.hidden) {
+        e.preventDefault();
+        clearFilter();
+      }
     }
   });
 
-  // Copy
-  copyBtn.addEventListener('click', async () => {
-    const textToCopy = JSON.stringify(parsedData, null, 2);
+  // ---------- Headers ----------
+
+  let headersPromise = null;
+  let headersText = '';
+
+  function notice(text) {
+    return el('p', { className: 'jv-notice', text });
+  }
+
+  async function fetchHeaders() {
+    const url = location.href;
+    let res = null;
     try {
-      await navigator.clipboard.writeText(textToCopy);
+      res = await fetch(url, { method: 'HEAD', credentials: 'same-origin' });
+    } catch (e) {
+      res = null;
+    }
+    if (!res || res.status === 405 || res.status === 501) {
+      res = await fetch(url, { method: 'GET', credentials: 'same-origin', cache: 'force-cache' });
+      if (res.body) res.body.cancel().catch(() => {});
+    }
+    return res;
+  }
+
+  function renderHeaders(res) {
+    const status = `HTTP ${res.status} ${res.statusText}`.trim();
+    const pairs = [...res.headers];
+    headersText = [status, ...pairs.map(([name, value]) => `${name}: ${value}`)].join('\n');
+
+    const statusClass = res.status >= 400 ? 'jv-status-error'
+      : res.status >= 300 ? 'jv-status-3xx'
+      : res.status >= 200 ? 'jv-status-2xx'
+      : 'jv-status-other';
+    const pill = el('div', { className: `jv-status ${statusClass}` }, [
+      el('span', { className: 'jv-status-dot', 'aria-hidden': 'true' }),
+      status
+    ]);
+
+    const rows = pairs.map(([name, value]) => el('tr', {
+      className: 'jv-header-row',
+      'data-match-text': `${name}: ${value}`.toLowerCase()
+    }, [
+      el('th', { scope: 'row', text: name }),
+      el('td', { text: value })
+    ]));
+    const table = el('table', { className: 'jv-headers-table' }, [el('tbody', {}, rows)]);
+    const empty = el('p', { className: 'jv-notice jv-headers-empty', hidden: '', text: 'No matching headers' });
+
+    panels.headers.replaceChildren(pill, rows.length ? table : notice('No headers returned.'), empty);
+    filterHeaders(filterQuery.trim().toLowerCase());
+  }
+
+  function loadHeadersOnce() {
+    if (headersPromise) return headersPromise;
+
+    if (location.protocol !== 'http:' && location.protocol !== 'https:') {
+      headersText = 'Headers are only available over HTTP/HTTPS.';
+      panels.headers.replaceChildren(notice(headersText));
+      headersPromise = Promise.resolve();
+      return headersPromise;
+    }
+
+    panels.headers.replaceChildren(notice('Loading headers…'));
+    headersPromise = fetchHeaders().then(renderHeaders, (err) => {
+      headersText = `Couldn’t load headers: ${err.message}`;
+      panels.headers.replaceChildren(notice(headersText));
+    });
+    return headersPromise;
+  }
+
+  // ---------- Tabs ----------
+
+  let activeTab = 'json';
+
+  function activateTab(name, focus) {
+    activeTab = name;
+    container.dataset.tab = name;
+    for (const tabName of TABS) {
+      const selected = tabName === name;
+      tabButtons[tabName].setAttribute('aria-selected', String(selected));
+      tabButtons[tabName].tabIndex = selected ? 0 : -1;
+      panels[tabName].hidden = !selected;
+    }
+    if (focus) tabButtons[name].focus();
+    if (name === 'headers') loadHeadersOnce();
+    setCopyLabel(false);
+  }
+
+  for (const name of TABS) {
+    tabButtons[name].addEventListener('click', () => activateTab(name, false));
+  }
+
+  tabList.addEventListener('keydown', (e) => {
+    const index = TABS.indexOf(activeTab);
+    const next = {
+      ArrowRight: (index + 1) % TABS.length,
+      ArrowLeft: (index - 1 + TABS.length) % TABS.length,
+      Home: 0,
+      End: TABS.length - 1
+    }[e.key];
+    if (next === undefined) return;
+    e.preventDefault();
+    activateTab(TABS[next], true);
+  });
+
+  // ---------- Copy ----------
+
+  const COPY_TITLES = { json: 'Copy JSON', raw: 'Copy raw text', headers: 'Copy headers' };
+  let copyTimer = null;
+
+  function setCopyLabel(copied) {
+    clearTimeout(copyTimer);
+    const label = copied ? 'Copied' : 'Copy';
+    const title = copied ? 'Copied' : COPY_TITLES[activeTab];
+    copyBtn.querySelector('.jv-btn-icon').innerHTML = copied ? ICONS.check : ICONS.copy;
+    copyBtn.querySelector('.jv-btn-label').textContent = label;
+    copyBtn.title = title;
+    copyBtn.setAttribute('aria-label', title);
+    copyBtn.classList.toggle('copied', copied);
+  }
+
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
     } catch (e) {
       const ta = document.createElement('textarea');
-      ta.value = textToCopy;
+      ta.value = text;
       document.body.appendChild(ta);
       ta.select();
       document.execCommand('copy');
       document.body.removeChild(ta);
     }
-    copyBtn.innerHTML = ICONS.check;
-    copyBtn.title = 'Copied';
-    copyBtn.setAttribute('aria-label', 'Copied');
-    copyBtn.classList.add('copied');
-    setTimeout(() => {
-      copyBtn.innerHTML = ICONS.copy;
-      copyBtn.title = 'Copy JSON';
-      copyBtn.setAttribute('aria-label', 'Copy JSON');
-      copyBtn.classList.remove('copied');
-    }, 1500);
+  }
+
+  copyBtn.addEventListener('click', async () => {
+    let text;
+    if (activeTab === 'raw') {
+      text = rawText;
+    } else if (activeTab === 'headers') {
+      await loadHeadersOnce();
+      text = headersText;
+    } else {
+      text = JSON.stringify(parsedData, null, 2);
+    }
+    await copyText(text);
+    setCopyLabel(true);
+    copyTimer = setTimeout(() => setCopyLabel(false), 1500);
   });
+
+  setCopyLabel(false);
 })();
