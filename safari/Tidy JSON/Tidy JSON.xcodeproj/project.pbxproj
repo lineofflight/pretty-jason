@@ -15,14 +15,6 @@
 		26852EC5306D2F8500672FBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26852EC3306D2F8500672FBD /* Main.storyboard */; };
 		26852ECC306D2F8500672FBD /* Tidy JSON Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 26852ECB306D2F8500672FBD /* Tidy JSON Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		26852ED6306D2F8500672FBD /* Tidy JSON Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 26852ED5306D2F8500672FBD /* Tidy JSON Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		26852EDB306D2F8500672FBD /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 26852EA0306D2F8400672FBD /* Main.html */; };
-		26852EDC306D2F8500672FBD /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 26852EA0306D2F8400672FBD /* Main.html */; };
-		26852EDD306D2F8500672FBD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 26852EA2306D2F8400672FBD /* Icon.png */; };
-		26852EDE306D2F8500672FBD /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 26852EA2306D2F8400672FBD /* Icon.png */; };
-		26852EDF306D2F8500672FBD /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 26852EA3306D2F8400672FBD /* Style.css */; };
-		26852EE0306D2F8500672FBD /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 26852EA3306D2F8400672FBD /* Style.css */; };
-		26852EE1306D2F8500672FBD /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 26852EA4306D2F8400672FBD /* Script.js */; };
-		26852EE2306D2F8500672FBD /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 26852EA4306D2F8400672FBD /* Script.js */; };
 		26852EE3306D2F8500672FBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26852EA5306D2F8400672FBD /* ViewController.swift */; };
 		26852EE4306D2F8500672FBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26852EA5306D2F8400672FBD /* ViewController.swift */; };
 		26852EE5306D2F8500672FBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26852EA6306D2F8500672FBD /* Assets.xcassets */; };
@@ -78,10 +70,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		26852EA1306D2F8400672FBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
-		26852EA2306D2F8400672FBD /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		26852EA3306D2F8400672FBD /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
-		26852EA4306D2F8400672FBD /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
 		26852EA5306D2F8400672FBD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		26852EA6306D2F8500672FBD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		26852EA8306D2F8500672FBD /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
@@ -147,20 +135,8 @@
 			children = (
 				26852EA5306D2F8400672FBD /* ViewController.swift */,
 				26852EA6306D2F8500672FBD /* Assets.xcassets */,
-				26852E9F306D2F8400672FBD /* Resources */,
 			);
 			path = "Shared (App)";
-			sourceTree = "<group>";
-		};
-		26852E9F306D2F8400672FBD /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				26852EA0306D2F8400672FBD /* Main.html */,
-				26852EA2306D2F8400672FBD /* Icon.png */,
-				26852EA3306D2F8400672FBD /* Style.css */,
-				26852EA4306D2F8400672FBD /* Script.js */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		26852EA7306D2F8500672FBD /* Shared (Extension) */ = {
@@ -354,24 +330,16 @@
 		26852EAB306D2F8500672FBD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
-				26852EDD306D2F8500672FBD /* Icon.png in Resources */,
 				26852EB6306D2F8500672FBD /* LaunchScreen.storyboard in Resources */,
-				26852EDB306D2F8500672FBD /* Main.html in Resources */,
-				26852EE1306D2F8500672FBD /* Script.js in Resources */,
 				26852EE5306D2F8500672FBD /* Assets.xcassets in Resources */,
 				26852EB9306D2F8500672FBD /* Main.storyboard in Resources */,
-				26852EDF306D2F8500672FBD /* Style.css in Resources */,
 			);
 		};
 		26852EBD306D2F8500672FBD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
-				26852EDE306D2F8500672FBD /* Icon.png in Resources */,
-				26852EE0306D2F8500672FBD /* Style.css in Resources */,
 				26852EC5306D2F8500672FBD /* Main.storyboard in Resources */,
-				26852EE2306D2F8500672FBD /* Script.js in Resources */,
 				26852EE6306D2F8500672FBD /* Assets.xcassets in Resources */,
-				26852EDC306D2F8500672FBD /* Main.html in Resources */,
 			);
 		};
 		26852EC9306D2F8500672FBD /* Resources */ = {
@@ -438,14 +406,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		26852EA0306D2F8400672FBD /* Main.html */ = {
-			isa = PBXVariantGroup;
-			children = (
-				26852EA1306D2F8400672FBD /* Base */,
-			);
-			name = Main.html;
-			sourceTree = "<group>";
-		};
 		26852EB4306D2F8500672FBD /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -681,8 +641,6 @@
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
-					"-framework",
-					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.tidyjson;
 				PRODUCT_NAME = "Tidy JSON";
@@ -722,8 +680,6 @@
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
-					"-framework",
-					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.tidyjson;
 				PRODUCT_NAME = "Tidy JSON";
@@ -819,7 +775,6 @@
 				DEVELOPMENT_TEAM = L92QX7NS6V;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Tidy JSON";
@@ -834,8 +789,6 @@
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
-					"-framework",
-					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.tidyjson;
 				PRODUCT_NAME = "Tidy JSON";
@@ -859,7 +812,6 @@
 				DEVELOPMENT_TEAM = L92QX7NS6V;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Tidy JSON";
@@ -874,8 +826,6 @@
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
-					"-framework",
-					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.tidyjson;
 				PRODUCT_NAME = "Tidy JSON";
