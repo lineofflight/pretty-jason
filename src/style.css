@@ -2,64 +2,72 @@
   --jv-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   --jv-font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
 
-  /* Catppuccin Latte */
-  --jv-bg: #eff1f5;
-  --jv-mantle: #e6e9ef;
-  --jv-surface: #ccd0da;
-  --jv-subtext: #5c5f77;
-  --jv-text: #2f3146;
-  --jv-hover: #e6e9ef;
-  --jv-key: #2f3146;
-  --jv-string: #40a02b;
-  --jv-number: #fe640b;
-  --jv-boolean: #d20f39;
-  --jv-null: #8c8fa1;
-  --jv-punct: #5c5f77;
-  --jv-link: #1e66f5;
-  --jv-dim: #9ca0b0;
-
-  --jv-ok: var(--jv-string);
-  --jv-warn: var(--jv-number);
-  --jv-error: var(--jv-boolean);
+  /* GitHub Primer Light */
+  --jv-bg: #ffffff;
+  --jv-mantle: #f6f8fa;
+  --jv-surface: #d0d7de;
+  --jv-bar-hover: #eaeef2;
+  --jv-hover: #f6f8fa;
+  --jv-text: #1f2328;
+  --jv-subtext: #59636e;
+  --jv-key: #116329;
+  --jv-string: #0a3069;
+  --jv-number: #0550ae;
+  --jv-boolean: #cf222e;
+  --jv-null: #59636e;
+  --jv-punct: #59636e;
+  --jv-link: #0969da;
+  --jv-dim: #6e7781;
+  --jv-ok: #1a7f37;
+  --jv-warn: #9a6700;
+  --jv-error: #cf222e;
   --jv-accent: var(--jv-link);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not(.jv-theme-light) {
-    /* Catppuccin Mocha */
-    --jv-bg: #1e1e2e;
-    --jv-mantle: #181825;
-    --jv-surface: #313244;
-    --jv-subtext: #a6adc8;
-    --jv-text: #cdd6f4;
-    --jv-hover: #313244;
-    --jv-key: #cdd6f4;
-    --jv-string: #a6e3a1;
-    --jv-number: #fab387;
-    --jv-boolean: #f38ba8;
-    --jv-null: #7f849c;
-    --jv-punct: #9399b2;
-    --jv-link: #89b4fa;
-    --jv-dim: #6c7086;
+    /* GitHub Primer Dark */
+    --jv-bg: #0d1117;
+    --jv-mantle: #161b22;
+    --jv-surface: #30363d;
+    --jv-bar-hover: #21262d;
+    --jv-hover: #161b22;
+    --jv-text: #e6edf3;
+    --jv-subtext: #8b949e;
+    --jv-key: #7ee787;
+    --jv-string: #a5d6ff;
+    --jv-number: #79c0ff;
+    --jv-boolean: #ff7b72;
+    --jv-null: #8b949e;
+    --jv-punct: #8b949e;
+    --jv-link: #2f81f7;
+    --jv-dim: #6e7681;
+    --jv-ok: #3fb950;
+    --jv-warn: #d29922;
+    --jv-error: #f85149;
   }
 }
 
 :root.jv-theme-dark {
-  /* Catppuccin Mocha */
-  --jv-bg: #1e1e2e;
-  --jv-mantle: #181825;
-  --jv-surface: #313244;
-  --jv-subtext: #a6adc8;
-  --jv-text: #cdd6f4;
-  --jv-hover: #313244;
-  --jv-key: #cdd6f4;
-  --jv-string: #a6e3a1;
-  --jv-number: #fab387;
-  --jv-boolean: #f38ba8;
-  --jv-null: #7f849c;
-  --jv-punct: #9399b2;
-  --jv-link: #89b4fa;
-  --jv-dim: #6c7086;
+  /* GitHub Primer Dark */
+  --jv-bg: #0d1117;
+  --jv-mantle: #161b22;
+  --jv-surface: #30363d;
+  --jv-bar-hover: #21262d;
+  --jv-hover: #161b22;
+  --jv-text: #e6edf3;
+  --jv-subtext: #8b949e;
+  --jv-key: #7ee787;
+  --jv-string: #a5d6ff;
+  --jv-number: #79c0ff;
+  --jv-boolean: #ff7b72;
+  --jv-null: #8b949e;
+  --jv-punct: #8b949e;
+  --jv-link: #2f81f7;
+  --jv-dim: #6e7681;
+  --jv-ok: #3fb950;
+  --jv-warn: #d29922;
+  --jv-error: #f85149;
 }
 
 :root.jv-active {
@@ -293,7 +301,7 @@ html.jv-active, body.jv-active {
 @media (hover: hover) {
   .jv-tab:hover:not([aria-selected="true"]),
   .jv-btn:hover {
-    background: var(--jv-surface);
+    background: var(--jv-bar-hover);
     color: var(--jv-text);
   }
 

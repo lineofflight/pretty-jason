@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  if (window.__tidyJsonLoaded) return;
+  if (window.__prettyJasonLoaded) return;
 
   function detectJSON() {
     const ct = (document.contentType || '').toLowerCase();
@@ -35,7 +35,7 @@
     return;
   }
 
-  window.__tidyJsonLoaded = true;
+  window.__prettyJasonLoaded = true;
 
   const root = document.documentElement;
   root.classList.add('jv-active');
@@ -55,8 +55,8 @@
   }
 
   // Tint Safari chrome to match the bar
-  const LIGHT_TINT = '#e6e9ef';
-  const DARK_TINT = '#181825';
+  const LIGHT_TINT = '#f6f8fa';
+  const DARK_TINT = '#161b22';
   const lightMeta = document.createElement('meta');
   lightMeta.name = 'theme-color';
   const darkMeta = document.createElement('meta');

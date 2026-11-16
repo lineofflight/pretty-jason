@@ -13,8 +13,8 @@
 		26852EB9306D2F8500672FBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26852EB7306D2F8500672FBD /* Main.storyboard */; };
 		26852EC2306D2F8500672FBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26852EC1306D2F8500672FBD /* AppDelegate.swift */; };
 		26852EC5306D2F8500672FBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 26852EC3306D2F8500672FBD /* Main.storyboard */; };
-		26852ECC306D2F8500672FBD /* Tidy JSON Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 26852ECB306D2F8500672FBD /* Tidy JSON Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		26852ED6306D2F8500672FBD /* Tidy JSON Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 26852ED5306D2F8500672FBD /* Tidy JSON Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		26852ECC306D2F8500672FBD /* Pretty Jason Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 26852ECB306D2F8500672FBD /* Pretty Jason Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		26852ED6306D2F8500672FBD /* Pretty Jason Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 26852ED5306D2F8500672FBD /* Pretty Jason Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		26852EE3306D2F8500672FBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26852EA5306D2F8400672FBD /* ViewController.swift */; };
 		26852EE4306D2F8500672FBD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26852EA5306D2F8400672FBD /* ViewController.swift */; };
 		26852EE5306D2F8500672FBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26852EA6306D2F8500672FBD /* Assets.xcassets */; };
@@ -37,14 +37,14 @@
 			containerPortal = 26852E9A306D2F8400672FBD /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 26852ECA306D2F8500672FBD;
-			remoteInfo = "Tidy JSON Extension (iOS)";
+			remoteInfo = "Pretty Jason Extension (iOS)";
 		};
 		26852ED7306D2F8500672FBD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 26852E9A306D2F8400672FBD /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 26852ED4306D2F8500672FBD;
-			remoteInfo = "Tidy JSON Extension (macOS)";
+			remoteInfo = "Pretty Jason Extension (macOS)";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -54,7 +54,7 @@
 			dstPath = "";
 			dstSubfolder = PlugIns;
 			files = (
-				26852ECC306D2F8500672FBD /* Tidy JSON Extension.appex in Embed Foundation Extensions */,
+				26852ECC306D2F8500672FBD /* Pretty Jason Extension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 		};
@@ -63,7 +63,7 @@
 			dstPath = "";
 			dstSubfolder = PlugIns;
 			files = (
-				26852ED6306D2F8500672FBD /* Tidy JSON Extension.appex in Embed Foundation Extensions */,
+				26852ED6306D2F8500672FBD /* Pretty Jason Extension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 		};
@@ -73,19 +73,19 @@
 		26852EA5306D2F8400672FBD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		26852EA6306D2F8500672FBD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		26852EA8306D2F8500672FBD /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
-		26852EAD306D2F8500672FBD /* Tidy JSON.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tidy JSON.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		26852EAD306D2F8500672FBD /* Pretty Jason.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pretty Jason.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		26852EB0306D2F8500672FBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26852EB2306D2F8500672FBD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		26852EB5306D2F8500672FBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		26852EB8306D2F8500672FBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		26852EBA306D2F8500672FBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		26852EBF306D2F8500672FBD /* Tidy JSON.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tidy JSON.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		26852EBF306D2F8500672FBD /* Pretty Jason.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pretty Jason.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		26852EC1306D2F8500672FBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		26852EC4306D2F8500672FBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		26852EC6306D2F8500672FBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		26852ECB306D2F8500672FBD /* Tidy JSON Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Tidy JSON Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		26852ECB306D2F8500672FBD /* Pretty Jason Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Pretty Jason Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		26852ED0306D2F8500672FBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		26852ED5306D2F8500672FBD /* Tidy JSON Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Tidy JSON Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		26852ED5306D2F8500672FBD /* Pretty Jason Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Pretty Jason Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		26852EDA306D2F8500672FBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		26852EFA306D2F8500672FBD /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = ../../../src/icons; sourceTree = "<group>"; };
 		26852EFB306D2F8500672FBD /* style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = style.css; path = ../../../src/style.css; sourceTree = "<group>"; };
@@ -151,10 +151,10 @@
 		26852EAE306D2F8500672FBD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				26852EAD306D2F8500672FBD /* Tidy JSON.app */,
-				26852EBF306D2F8500672FBD /* Tidy JSON.app */,
-				26852ECB306D2F8500672FBD /* Tidy JSON Extension.appex */,
-				26852ED5306D2F8500672FBD /* Tidy JSON Extension.appex */,
+				26852EAD306D2F8500672FBD /* Pretty Jason.app */,
+				26852EBF306D2F8500672FBD /* Pretty Jason.app */,
+				26852ECB306D2F8500672FBD /* Pretty Jason Extension.appex */,
+				26852ED5306D2F8500672FBD /* Pretty Jason Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -212,9 +212,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		26852EAC306D2F8500672FBD /* Tidy JSON (iOS) */ = {
+		26852EAC306D2F8500672FBD /* Pretty Jason (iOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 26852EEF306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Tidy JSON (iOS)" */;
+			buildConfigurationList = 26852EEF306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Pretty Jason (iOS)" */;
 			buildPhases = (
 				26852EA9306D2F8500672FBD /* Sources */,
 				26852EAA306D2F8500672FBD /* Frameworks */,
@@ -226,14 +226,14 @@
 			dependencies = (
 				26852ECE306D2F8500672FBD /* PBXTargetDependency */,
 			);
-			name = "Tidy JSON (iOS)";
-			productName = "Tidy JSON (iOS)";
-			productReference = 26852EAD306D2F8500672FBD /* Tidy JSON.app */;
+			name = "Pretty Jason (iOS)";
+			productName = "Pretty Jason (iOS)";
+			productReference = 26852EAD306D2F8500672FBD /* Pretty Jason.app */;
 			productType = "com.apple.product-type.application";
 		};
-		26852EBE306D2F8500672FBD /* Tidy JSON (macOS) */ = {
+		26852EBE306D2F8500672FBD /* Pretty Jason (macOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 26852EF6306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Tidy JSON (macOS)" */;
+			buildConfigurationList = 26852EF6306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Pretty Jason (macOS)" */;
 			buildPhases = (
 				26852EBB306D2F8500672FBD /* Sources */,
 				26852EBC306D2F8500672FBD /* Frameworks */,
@@ -245,14 +245,14 @@
 			dependencies = (
 				26852ED8306D2F8500672FBD /* PBXTargetDependency */,
 			);
-			name = "Tidy JSON (macOS)";
-			productName = "Tidy JSON (macOS)";
-			productReference = 26852EBF306D2F8500672FBD /* Tidy JSON.app */;
+			name = "Pretty Jason (macOS)";
+			productName = "Pretty Jason (macOS)";
+			productReference = 26852EBF306D2F8500672FBD /* Pretty Jason.app */;
 			productType = "com.apple.product-type.application";
 		};
-		26852ECA306D2F8500672FBD /* Tidy JSON Extension (iOS) */ = {
+		26852ECA306D2F8500672FBD /* Pretty Jason Extension (iOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 26852EEB306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Tidy JSON Extension (iOS)" */;
+			buildConfigurationList = 26852EEB306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Pretty Jason Extension (iOS)" */;
 			buildPhases = (
 				26852EC7306D2F8500672FBD /* Sources */,
 				26852EC8306D2F8500672FBD /* Frameworks */,
@@ -260,14 +260,14 @@
 			);
 			buildRules = (
 			);
-			name = "Tidy JSON Extension (iOS)";
-			productName = "Tidy JSON Extension (iOS)";
-			productReference = 26852ECB306D2F8500672FBD /* Tidy JSON Extension.appex */;
+			name = "Pretty Jason Extension (iOS)";
+			productName = "Pretty Jason Extension (iOS)";
+			productReference = 26852ECB306D2F8500672FBD /* Pretty Jason Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		26852ED4306D2F8500672FBD /* Tidy JSON Extension (macOS) */ = {
+		26852ED4306D2F8500672FBD /* Pretty Jason Extension (macOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 26852EF2306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Tidy JSON Extension (macOS)" */;
+			buildConfigurationList = 26852EF2306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Pretty Jason Extension (macOS)" */;
 			buildPhases = (
 				26852ED1306D2F8500672FBD /* Sources */,
 				26852ED2306D2F8500672FBD /* Frameworks */,
@@ -275,9 +275,9 @@
 			);
 			buildRules = (
 			);
-			name = "Tidy JSON Extension (macOS)";
-			productName = "Tidy JSON Extension (macOS)";
-			productReference = 26852ED5306D2F8500672FBD /* Tidy JSON Extension.appex */;
+			name = "Pretty Jason Extension (macOS)";
+			productName = "Pretty Jason Extension (macOS)";
+			productReference = 26852ED5306D2F8500672FBD /* Pretty Jason Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -304,7 +304,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 26852E9D306D2F8400672FBD /* Build configuration list for PBXProject "Tidy JSON" */;
+			buildConfigurationList = 26852E9D306D2F8400672FBD /* Build configuration list for PBXProject "Pretty Jason" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -318,10 +318,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				26852EAC306D2F8500672FBD /* Tidy JSON (iOS) */,
-				26852EBE306D2F8500672FBD /* Tidy JSON (macOS) */,
-				26852ECA306D2F8500672FBD /* Tidy JSON Extension (iOS) */,
-				26852ED4306D2F8500672FBD /* Tidy JSON Extension (macOS) */,
+				26852EAC306D2F8500672FBD /* Pretty Jason (iOS) */,
+				26852EBE306D2F8500672FBD /* Pretty Jason (macOS) */,
+				26852ECA306D2F8500672FBD /* Pretty Jason Extension (iOS) */,
+				26852ED4306D2F8500672FBD /* Pretty Jason Extension (macOS) */,
 			);
 		};
 /* End PBXProject section */
@@ -395,12 +395,12 @@
 /* Begin PBXTargetDependency section */
 		26852ECE306D2F8500672FBD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 26852ECA306D2F8500672FBD /* Tidy JSON Extension (iOS) */;
+			target = 26852ECA306D2F8500672FBD /* Pretty Jason Extension (iOS) */;
 			targetProxy = 26852ECD306D2F8500672FBD /* PBXContainerItemProxy */;
 		};
 		26852ED8306D2F8500672FBD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 26852ED4306D2F8500672FBD /* Tidy JSON Extension (macOS) */;
+			target = 26852ED4306D2F8500672FBD /* Pretty Jason Extension (macOS) */;
 			targetProxy = 26852ED7306D2F8500672FBD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -433,7 +433,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		26852EE9306D2F8500672FBD /* Debug configuration for PBXProject "Tidy JSON" */ = {
+		26852EE9306D2F8500672FBD /* Debug configuration for PBXProject "Pretty Jason" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -494,7 +494,7 @@
 			};
 			name = Debug;
 		};
-		26852EEA306D2F8500672FBD /* Release configuration for PBXProject "Tidy JSON" */ = {
+		26852EEA306D2F8500672FBD /* Release configuration for PBXProject "Pretty Jason" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -547,7 +547,7 @@
 			};
 			name = Release;
 		};
-		26852EEC306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Tidy JSON Extension (iOS)" */ = {
+		26852EEC306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Pretty Jason Extension (iOS)" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -555,7 +555,7 @@
 				DEVELOPMENT_TEAM = L92QX7NS6V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Tidy JSON Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "Pretty Jason Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -568,8 +568,8 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.tidyjson.Extension;
-				PRODUCT_NAME = "Tidy JSON Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.prettyjason.Extension;
+				PRODUCT_NAME = "Pretty Jason Extension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -581,7 +581,7 @@
 			};
 			name = Debug;
 		};
-		26852EED306D2F8500672FBD /* Release configuration for PBXNativeTarget "Tidy JSON Extension (iOS)" */ = {
+		26852EED306D2F8500672FBD /* Release configuration for PBXNativeTarget "Pretty Jason Extension (iOS)" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -589,7 +589,7 @@
 				DEVELOPMENT_TEAM = L92QX7NS6V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Tidy JSON Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "Pretty Jason Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -602,8 +602,8 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.tidyjson.Extension;
-				PRODUCT_NAME = "Tidy JSON Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.prettyjason.Extension;
+				PRODUCT_NAME = "Pretty Jason Extension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -616,7 +616,7 @@
 			};
 			name = Release;
 		};
-		26852EF0306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Tidy JSON (iOS)" */ = {
+		26852EF0306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Pretty Jason (iOS)" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -626,7 +626,7 @@
 				DEVELOPMENT_TEAM = L92QX7NS6V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (App)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Tidy JSON";
+				INFOPLIST_KEY_CFBundleDisplayName = "Pretty Jason";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -643,8 +643,8 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.tidyjson;
-				PRODUCT_NAME = "Tidy JSON";
+				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.prettyjason;
+				PRODUCT_NAME = "Pretty Jason";
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -656,7 +656,7 @@
 			};
 			name = Debug;
 		};
-		26852EF1306D2F8500672FBD /* Release configuration for PBXNativeTarget "Tidy JSON (iOS)" */ = {
+		26852EF1306D2F8500672FBD /* Release configuration for PBXNativeTarget "Pretty Jason (iOS)" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -666,7 +666,7 @@
 				DEVELOPMENT_TEAM = L92QX7NS6V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (App)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Tidy JSON";
+				INFOPLIST_KEY_CFBundleDisplayName = "Pretty Jason";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -683,8 +683,8 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.tidyjson;
-				PRODUCT_NAME = "Tidy JSON";
+				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.prettyjason;
+				PRODUCT_NAME = "Pretty Jason";
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -697,7 +697,7 @@
 			};
 			name = Release;
 		};
-		26852EF3306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Tidy JSON Extension (macOS)" */ = {
+		26852EF3306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Pretty Jason Extension (macOS)" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -707,7 +707,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Tidy JSON Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "Pretty Jason Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Line of Flight B.V. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -720,8 +720,8 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.tidyjson.Extension;
-				PRODUCT_NAME = "Tidy JSON Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.prettyjason.Extension;
+				PRODUCT_NAME = "Pretty Jason Extension";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -732,7 +732,7 @@
 			};
 			name = Debug;
 		};
-		26852EF4306D2F8500672FBD /* Release configuration for PBXNativeTarget "Tidy JSON Extension (macOS)" */ = {
+		26852EF4306D2F8500672FBD /* Release configuration for PBXNativeTarget "Pretty Jason Extension (macOS)" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -742,7 +742,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Tidy JSON Extension";
+				INFOPLIST_KEY_CFBundleDisplayName = "Pretty Jason Extension";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Line of Flight B.V. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -755,8 +755,8 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.tidyjson.Extension;
-				PRODUCT_NAME = "Tidy JSON Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.prettyjason.Extension;
+				PRODUCT_NAME = "Pretty Jason Extension";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -767,7 +767,7 @@
 			};
 			name = Release;
 		};
-		26852EF7306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Tidy JSON (macOS)" */ = {
+		26852EF7306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Pretty Jason (macOS)" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -779,7 +779,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Tidy JSON";
+				INFOPLIST_KEY_CFBundleDisplayName = "Pretty Jason";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Line of Flight B.V. All rights reserved.";
@@ -795,8 +795,8 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.tidyjson;
-				PRODUCT_NAME = "Tidy JSON";
+				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.prettyjason;
+				PRODUCT_NAME = "Pretty Jason";
 				SDKROOT = macosx;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -807,7 +807,7 @@
 			};
 			name = Debug;
 		};
-		26852EF8306D2F8500672FBD /* Release configuration for PBXNativeTarget "Tidy JSON (macOS)" */ = {
+		26852EF8306D2F8500672FBD /* Release configuration for PBXNativeTarget "Pretty Jason (macOS)" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -819,7 +819,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Tidy JSON";
+				INFOPLIST_KEY_CFBundleDisplayName = "Pretty Jason";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Line of Flight B.V. All rights reserved.";
@@ -835,8 +835,8 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.tidyjson;
-				PRODUCT_NAME = "Tidy JSON";
+				PRODUCT_BUNDLE_IDENTIFIER = ht.lineofflig.prettyjason;
+				PRODUCT_NAME = "Pretty Jason";
 				SDKROOT = macosx;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -850,43 +850,43 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		26852E9D306D2F8400672FBD /* Build configuration list for PBXProject "Tidy JSON" */ = {
+		26852E9D306D2F8400672FBD /* Build configuration list for PBXProject "Pretty Jason" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				26852EE9306D2F8500672FBD /* Debug configuration for PBXProject "Tidy JSON" */,
-				26852EEA306D2F8500672FBD /* Release configuration for PBXProject "Tidy JSON" */,
+				26852EE9306D2F8500672FBD /* Debug configuration for PBXProject "Pretty Jason" */,
+				26852EEA306D2F8500672FBD /* Release configuration for PBXProject "Pretty Jason" */,
 			);
 			defaultConfigurationName = Release;
 		};
-		26852EEB306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Tidy JSON Extension (iOS)" */ = {
+		26852EEB306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Pretty Jason Extension (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				26852EEC306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Tidy JSON Extension (iOS)" */,
-				26852EED306D2F8500672FBD /* Release configuration for PBXNativeTarget "Tidy JSON Extension (iOS)" */,
+				26852EEC306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Pretty Jason Extension (iOS)" */,
+				26852EED306D2F8500672FBD /* Release configuration for PBXNativeTarget "Pretty Jason Extension (iOS)" */,
 			);
 			defaultConfigurationName = Release;
 		};
-		26852EEF306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Tidy JSON (iOS)" */ = {
+		26852EEF306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Pretty Jason (iOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				26852EF0306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Tidy JSON (iOS)" */,
-				26852EF1306D2F8500672FBD /* Release configuration for PBXNativeTarget "Tidy JSON (iOS)" */,
+				26852EF0306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Pretty Jason (iOS)" */,
+				26852EF1306D2F8500672FBD /* Release configuration for PBXNativeTarget "Pretty Jason (iOS)" */,
 			);
 			defaultConfigurationName = Release;
 		};
-		26852EF2306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Tidy JSON Extension (macOS)" */ = {
+		26852EF2306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Pretty Jason Extension (macOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				26852EF3306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Tidy JSON Extension (macOS)" */,
-				26852EF4306D2F8500672FBD /* Release configuration for PBXNativeTarget "Tidy JSON Extension (macOS)" */,
+				26852EF3306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Pretty Jason Extension (macOS)" */,
+				26852EF4306D2F8500672FBD /* Release configuration for PBXNativeTarget "Pretty Jason Extension (macOS)" */,
 			);
 			defaultConfigurationName = Release;
 		};
-		26852EF6306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Tidy JSON (macOS)" */ = {
+		26852EF6306D2F8500672FBD /* Build configuration list for PBXNativeTarget "Pretty Jason (macOS)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				26852EF7306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Tidy JSON (macOS)" */,
-				26852EF8306D2F8500672FBD /* Release configuration for PBXNativeTarget "Tidy JSON (macOS)" */,
+				26852EF7306D2F8500672FBD /* Debug configuration for PBXNativeTarget "Pretty Jason (macOS)" */,
+				26852EF8306D2F8500672FBD /* Release configuration for PBXNativeTarget "Pretty Jason (macOS)" */,
 			);
 			defaultConfigurationName = Release;
 		};

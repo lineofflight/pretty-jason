@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Tidy JSON",
+  "name": "Pretty Jason",
   "version": "0.1.0",
   "description": "Format and inspect JSON responses with a collapsible tree, raw view, HTTP headers, and instant filtering.",
   "icons": {

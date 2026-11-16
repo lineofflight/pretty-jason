@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Tidy JSON runs entirely in your browser.
+Pretty Jason runs entirely in your browser.
 
 - No personal data or browsing history is collected, stored, or transmitted.
 - Parsing and formatting happen locally on your device.
@@ -12,4 +12,4 @@ Tidy JSON runs entirely in your browser.
 
 [Line of Flight B.V.](https://lineofflig.ht)  
 company@lineofflig.ht  
-https://github.com/lineofflight/tidy-json
+https://github.com/lineofflight/pretty-jason

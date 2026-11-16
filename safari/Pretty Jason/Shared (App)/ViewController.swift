@@ -17,7 +17,7 @@ import Combine
 typealias PlatformViewController = NSViewController
 #endif
 
-let extensionBundleIdentifier = "ht.lineofflig.tidyjson.Extension"
+let extensionBundleIdentifier = "ht.lineofflig.prettyjason.Extension"
 
 class ViewController: PlatformViewController {
 
@@ -81,9 +81,9 @@ final class ExtensionViewModel: ObservableObject {
         case .checking:
             return "Checking Safari…"
         case .enabled:
-            return "Tidy JSON’s extension is enabled in Safari. You can manage it in Safari Settings → Extensions."
+            return "Pretty Jason’s extension is enabled in Safari. You can manage it in Safari Settings → Extensions."
         case .disabled:
-            return "Tidy JSON’s extension is currently off. Turn it on in Safari Settings → Extensions."
+            return "Pretty Jason’s extension is currently off. Turn it on in Safari Settings → Extensions."
         case .unverifiedLocalBuild:
             return "Safari hasn’t loaded this local build yet. Enable Safari → Settings → Developer → Allow unsigned extensions, then check Extensions."
         case .error(let description):
@@ -147,7 +147,7 @@ struct SafariWrapperView: View {
                 .frame(width: 96, height: 96)
                 .accessibilityHidden(true)
 
-            Text("Tidy JSON")
+            Text("Pretty Jason")
                 .font(.title)
                 .fontWeight(.semibold)
                 .padding(.top, 12)
@@ -155,7 +155,7 @@ struct SafariWrapperView: View {
             VStack(spacing: 6) {
                 Text(model.message)
                 if case .error = model.state {
-                    Text("Open Safari → Settings → Extensions to check Tidy JSON.")
+                    Text("Open Safari → Settings → Extensions to check Pretty Jason.")
                 }
             }
             .font(.body)
@@ -192,7 +192,7 @@ struct SafariWrapperView: View {
 
     private let steps = [
         "Open Settings → Apps → Safari → Extensions",
-        "Tap Tidy JSON and turn Allow Extension on",
+        "Tap Pretty Jason and turn Allow Extension on",
         "Set All Websites to Allow",
     ]
 
@@ -206,7 +206,7 @@ struct SafariWrapperView: View {
                         .frame(width: 88, height: 88)
                         .accessibilityHidden(true)
 
-                    Text("Tidy JSON")
+                    Text("Pretty Jason")
                         .font(.largeTitle)
                         .fontWeight(.bold)
 
