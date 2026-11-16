@@ -237,12 +237,19 @@
 
   // ---------- Tree ----------
 
+  // hidden=until-found keeps collapsed text findable, but its layout cost grows
+  // quadratically with the number of hidden branches. Large documents fall back
+  // to plain hidden so Collapse All stays fast.
+  const UNTIL_FOUND_LIMIT = 1000;
+  let collapsedHiddenValue = 'until-found';
+
   function setNodeCollapsed(node, collapsed) {
+    if (node.classList.contains('jv-collapsed') === collapsed) return;
     const children = node.querySelector(':scope > .jv-children');
     if (!children) return;
     node.classList.toggle('jv-collapsed', collapsed);
     node.querySelector(':scope > .jv-line > .jv-toggle').classList.toggle('collapsed', collapsed);
-    if (collapsed) children.setAttribute('hidden', 'until-found');
+    if (collapsed) children.setAttribute('hidden', collapsedHiddenValue);
     else children.removeAttribute('hidden');
   }
 
@@ -391,9 +398,8 @@
   const rootNode = buildNode(null, parsedData, true, true);
   treeContainer.appendChild(rootNode);
 
-  function containerNodes() {
-    return [...treeContainer.querySelectorAll('.jv-children')].map((children) => children.parentElement);
-  }
+  const containers = [...treeContainer.querySelectorAll('.jv-children')].map((children) => children.parentElement);
+  if (containers.length > UNTIL_FOUND_LIMIT) collapsedHiddenValue = '';
 
   function childNodesOf(node) {
     const children = node.querySelector(':scope > .jv-children');
@@ -402,11 +408,11 @@
 
   collapseBtn.addEventListener('click', () => {
     // Keep the root open so the top-level shape stays readable
-    for (const node of containerNodes()) setNodeCollapsed(node, node !== rootNode);
+    for (const node of containers) setNodeCollapsed(node, node !== rootNode);
   });
 
   expandBtn.addEventListener('click', () => {
-    for (const node of containerNodes()) setNodeCollapsed(node, false);
+    for (const node of containers) setNodeCollapsed(node, false);
   });
 
   // ---------- Filter ----------
@@ -419,15 +425,16 @@
     const selfHit = node.dataset.selfMatch.includes(q);
     let descendantHit = false;
     let lastVisible = null;
-    for (const child of childNodesOf(node)) {
+    const children = childNodesOf(node);
+    for (const child of children) {
       if (filterNode(child, q, keepAll || selfHit)) descendantHit = true;
-      child.classList.remove('jv-tail');
       if (!child.hidden) lastVisible = child;
     }
-    if (lastVisible) lastVisible.classList.add('jv-tail');
+    for (const child of children) child.classList.toggle('jv-tail', child === lastVisible);
     if (descendantHit) setNodeCollapsed(node, false);
     const hit = selfHit || descendantHit;
-    node.hidden = !(hit || keepAll);
+    const hide = !(hit || keepAll);
+    if (node.hidden !== hide) node.hidden = hide;
     return hit;
   }
 
@@ -436,7 +443,7 @@
       collapsedBeforeFilter = new Set(treeContainer.querySelectorAll('.jv-node.jv-collapsed'));
     }
     if (collapsedBeforeFilter) {
-      for (const node of containerNodes()) setNodeCollapsed(node, collapsedBeforeFilter.has(node));
+      for (const node of containers) setNodeCollapsed(node, collapsedBeforeFilter.has(node));
     }
 
     if (q) {
