@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pretty Jason</title>
+  <meta name="description" content="Yet another pretty JSON browser extension.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pretty Jason">
+  <meta property="og:title" content="Pretty Jason">
+  <meta property="og:description" content="Yet another pretty JSON browser extension.">
+  <meta property="og:url" content="https://lineofflight.dev/pretty-jason/">
+  <meta property="og:image" content="https://lineofflight.dev/pretty-jason/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://lineofflight.dev/pretty-jason/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="demo.css">
+  <script src="demo.js" defer></script>
+</head>
+<body>
+  <div class="page home">
+    <main>
+      <header class="hero">
+        <img src="icon.svg" alt="" width="104" height="104">
+        <h1>Pretty Jason</h1>
+        <p class="lede lead">Yet another pretty JSON browser extension.</p>
+        <p class="lede">Fast, zero-clutter JSON and NDJSON formatting for Safari, Chrome, and Firefox.</p>
+        <div class="links">
+          <p class="status">Coming to the App Store</p>
+          <!-- App Store slot. Once Pretty Jason is live, replace the status line above with the link, for example:
+          <p class="status"><a href="https://apps.apple.com/app/pretty-jason/idXXXXXXXXXX">Get Pretty Jason on the App Store</a></p>
+          -->
+          <p class="status"><a href="https://github.com/lineofflight/pretty-jason">Source on GitHub</a></p>
+        </div>
+      </header>
+
+      <section class="jv-demo" id="demo" aria-label="Live demo">
+        <div class="jv-chrome" aria-hidden="true">
+          <div class="jv-lights"><span></span><span></span><span></span></div>
+          <div class="jv-address">api.example.com/v1/extensions/1042</div>
+        </div>
+        <noscript>The live demo needs JavaScript. Nothing else on this site does.</noscript>
+      </section>
+      <p class="hint">This is the real inspector. Fold a branch, click a key, press <code>/</code> to filter, switch the theme.</p>
+
+      <section class="points">
+        <div>
+          <h2>Fast by default</h2>
+          <p>Instant collapsible trees for JSON and JSON Lines (<code>ndjson</code> / <code>jsonl</code>). Option-click an arrow to fold or unfold an entire branch. Collapsed branches still open when your browser’s own <code>Cmd+F</code> finds a match inside.</p>
+        </div>
+        <div>
+          <h2>Click to copy paths</h2>
+          <p>Click any key to copy its JavaScript accessor path (<code>response.items[0].id</code>). Option-click a key to copy its JSON value instead.</p>
+        </div>
+        <div>
+          <h2>Zero-clutter smarts</h2>
+          <p>Inline color swatches, relative-time tooltips on ISO-8601 and Unix timestamps, clickable URLs and root-relative API paths, and a lazy <code>Headers</code> tab.</p>
+        </div>
+        <div>
+          <h2>GitHub Primer themes</h2>
+          <p>Crisp light and dark palettes from GitHub Primer that follow your system appearance or lock to <code>Auto</code>, <code>Light</code>, or <code>Dark</code> with zero flash.</p>
+        </div>
+        <div>
+          <h2>Mac, iPhone &amp; iPad</h2>
+          <p>Native Safari Web Extension for macOS, iOS, and iPadOS with a responsive mobile filter bar, plus Manifest V3 support for Chrome and Firefox.</p>
+        </div>
+        <div>
+          <h2>Private by design</h2>
+          <p>Runs entirely on-device with zero telemetry, zero analytics, and zero external requests.</p>
+        </div>
+      </section>
+
+      <section class="install" id="install">
+        <h2>Install</h2>
+        <p>Until Pretty Jason reaches the stores, install it from <a href="https://github.com/lineofflight/pretty-jason">the source</a>.</p>
+        <ul>
+          <li><strong>Safari (macOS &amp; iOS).</strong> Open <code>safari/Pretty Jason/Pretty Jason.xcodeproj</code> in Xcode and run the macOS or iOS app, then turn the extension on in Safari’s Extensions settings.</li>
+          <li><strong>Chrome.</strong> Open <code>chrome://extensions</code>, turn on Developer mode, choose Load unpacked, and pick the <code>src</code> folder.</li>
+          <li><strong>Firefox.</strong> Open <code>about:debugging</code>, choose This Firefox, then Load Temporary Add-on, and pick <code>src/manifest.json</code>.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <span class="owner">© Line of Flight B.V. · Amsterdam, Netherlands · KvK&nbsp;90477014</span>
+      <a href="privacy/">Privacy</a>
+      <a href="support/">Support</a>
+      <a href="https://github.com/lineofflight/pretty-jason">GitHub</a>
+    </footer>
+  </div>
+</body>
+</html>

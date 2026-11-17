@@ -1,0 +1,766 @@
+/* The live inspector on the home page. Everything below the frame rules is
+   src/style.css from the extension, with its viewport queries turned into
+   container queries so the inspector responds to the demo window. */
+
+.jv-demo {
+  container: jv / inline-size;
+  color-scheme: light;
+  margin: 0 auto 3rem;
+  overflow: hidden;
+  border: 1px solid var(--jv-surface);
+  border-radius: 12px;
+  background-color: var(--jv-bg);
+  color: var(--jv-text);
+  box-shadow: 0 1px 2px rgb(31 35 40 / 0.06), 0 12px 32px rgb(31 35 40 / 0.1);
+  font-family: var(--jv-font-mono);
+  font-size: 13px;
+  line-height: 1.55;
+  text-align: left;
+
+  --jv-font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --jv-font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+
+  /* GitHub Primer Light */
+  --jv-bg: #ffffff;
+  --jv-mantle: #f6f8fa;
+  --jv-surface: #d0d7de;
+  --jv-bar-hover: #eaeef2;
+  --jv-hover: #f6f8fa;
+  --jv-text: #1f2328;
+  --jv-subtext: #59636e;
+  --jv-key: #116329;
+  --jv-string: #0a3069;
+  --jv-number: #0550ae;
+  --jv-boolean: #cf222e;
+  --jv-null: #59636e;
+  --jv-punct: #59636e;
+  --jv-link: #0969da;
+  --jv-dim: #6e7781;
+  --jv-ok: #1a7f37;
+  --jv-warn: #9a6700;
+  --jv-error: #cf222e;
+  --jv-accent: var(--jv-link);
+}
+
+@media (prefers-color-scheme: dark) {
+  .jv-demo:not([data-theme="light"]) {
+    color-scheme: dark;
+    --jv-bg: #0d1117;
+    --jv-mantle: #161b22;
+    --jv-surface: #30363d;
+    --jv-bar-hover: #21262d;
+    --jv-hover: #161b22;
+    --jv-text: #e6edf3;
+    --jv-subtext: #8b949e;
+    --jv-key: #7ee787;
+    --jv-string: #a5d6ff;
+    --jv-number: #79c0ff;
+    --jv-boolean: #ff7b72;
+    --jv-null: #8b949e;
+    --jv-punct: #8b949e;
+    --jv-link: #2f81f7;
+    --jv-dim: #6e7681;
+    --jv-ok: #3fb950;
+    --jv-warn: #d29922;
+    --jv-error: #f85149;
+  }
+}
+
+.jv-demo[data-theme="dark"] {
+  /* GitHub Primer Dark */
+  color-scheme: dark;
+  --jv-bg: #0d1117;
+  --jv-mantle: #161b22;
+  --jv-surface: #30363d;
+  --jv-bar-hover: #21262d;
+  --jv-hover: #161b22;
+  --jv-text: #e6edf3;
+  --jv-subtext: #8b949e;
+  --jv-key: #7ee787;
+  --jv-string: #a5d6ff;
+  --jv-number: #79c0ff;
+  --jv-boolean: #ff7b72;
+  --jv-null: #8b949e;
+  --jv-punct: #8b949e;
+  --jv-link: #2f81f7;
+  --jv-dim: #6e7681;
+  --jv-ok: #3fb950;
+  --jv-warn: #d29922;
+  --jv-error: #f85149;
+}
+
+.jv-no-transitions,
+.jv-no-transitions *,
+.jv-no-transitions *::before,
+.jv-no-transitions *::after {
+  transition: none !important;
+}
+
+/* Browser frame */
+
+.jv-chrome {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+  padding: 0 12px;
+  background: var(--jv-mantle);
+  border-bottom: 1px solid var(--jv-surface);
+}
+
+.jv-lights {
+  display: flex;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.jv-lights span {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--jv-surface);
+}
+
+.jv-address {
+  flex: 1;
+  min-width: 0;
+  max-width: 26rem;
+  height: 24px;
+  margin: 0 auto;
+  padding: 0 10px;
+  overflow: hidden;
+  border: 1px solid var(--jv-surface);
+  border-radius: 6px;
+  background: var(--jv-bg);
+  color: var(--jv-subtext);
+  font-family: var(--jv-font-ui);
+  font-size: 12px;
+  line-height: 22px;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Balances the lights so the address stays centered */
+.jv-chrome::after {
+  content: "";
+  flex-shrink: 0;
+  width: 47px;
+}
+
+#jv-container {
+  max-height: 34rem;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.jv-demo noscript {
+  display: block;
+  padding: 14px 20px;
+  color: var(--jv-subtext);
+  font-family: var(--jv-font-ui);
+}
+
+/* ---------- From src/style.css ---------- */
+
+/* Author display rules must never override hidden (until-found is handled by the UA) */
+#jv-container [hidden]:not([hidden="until-found"]) {
+  display: none !important;
+}
+
+/* ---------- Bar ---------- */
+
+#jv-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+  height: 36px;
+  padding: 0 max(12px, env(safe-area-inset-right)) 0 max(12px, env(safe-area-inset-left));
+  background: var(--jv-mantle);
+  border-bottom: 1px solid var(--jv-surface);
+  color: var(--jv-text);
+  font-family: var(--jv-font-ui);
+  font-size: 12px;
+  line-height: 1;
+}
+
+#jv-bar-main,
+#jv-bar-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+}
+
+#jv-bar-main {
+  justify-content: space-between;
+}
+
+.jv-tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.jv-tab,
+.jv-btn,
+#jv-mobile-filter-done {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.jv-tab {
+  height: 24px;
+  padding: 0 9px;
+  border-radius: 5px;
+  color: var(--jv-subtext);
+  font-weight: 500;
+}
+
+.jv-tab[aria-selected="true"] {
+  background: var(--jv-bg);
+  color: var(--jv-text);
+  box-shadow: 0 0 0 1px var(--jv-surface);
+}
+
+.jv-meta {
+  color: var(--jv-subtext);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Sits beside the tabs; the auto margin pushes the actions right */
+#jv-size {
+  margin-right: auto;
+  padding-left: 6px;
+}
+
+#jv-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+#jv-filter-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-sizing: border-box;
+  width: 200px;
+  /* The filter gives up width before the buttons do */
+  min-width: 0;
+  height: 24px;
+  margin-right: 6px;
+  padding: 0 4px 0 8px;
+  border: 1px solid var(--jv-surface);
+  border-radius: 6px;
+  background: var(--jv-bg);
+  color: var(--jv-subtext);
+  transition: border-color 0.12s ease;
+}
+
+#jv-filter-wrap:focus-within {
+  border-color: var(--jv-accent);
+}
+
+.jv-filter-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.jv-filter-icon svg {
+  display: block;
+  width: 13px;
+  height: 13px;
+}
+
+#jv-filter,
+#jv-mobile-filter-input {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--jv-text);
+  font-family: var(--jv-font-ui);
+  font-size: 12px;
+}
+
+#jv-filter::placeholder,
+#jv-mobile-filter-input::placeholder {
+  color: var(--jv-dim);
+  opacity: 1;
+}
+
+.jv-kbd {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border: 1px solid var(--jv-surface);
+  border-radius: 4px;
+  color: var(--jv-subtext);
+  font-family: var(--jv-font-mono);
+  font-size: 10px;
+  line-height: 14px;
+  text-align: center;
+}
+
+#jv-filter-wrap:focus-within .jv-kbd {
+  display: none;
+}
+
+.jv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  box-sizing: border-box;
+  height: 24px;
+  min-width: 24px;
+  flex-shrink: 0;
+  padding: 0 7px;
+  border-radius: 5px;
+  color: var(--jv-subtext);
+  white-space: nowrap;
+}
+
+#jv-theme,
+#jv-mobile-filter-btn {
+  padding: 0;
+}
+
+.jv-btn-icon {
+  display: inline-flex;
+}
+
+.jv-btn svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.jv-btn.copied {
+  color: var(--jv-ok);
+}
+
+.jv-tab:focus-visible,
+.jv-btn:focus-visible,
+#jv-mobile-filter-done:focus-visible {
+  outline: 2px solid var(--jv-accent);
+  outline-offset: -2px;
+}
+
+@media (hover: hover) {
+  .jv-tab:hover:not([aria-selected="true"]),
+  .jv-btn:hover {
+    background: var(--jv-bar-hover);
+    color: var(--jv-text);
+  }
+
+  .jv-btn.copied:hover {
+    color: var(--jv-ok);
+  }
+}
+
+#jv-mobile-filter-btn {
+  display: none;
+}
+
+#jv-container[data-tab="raw"] #jv-filter-wrap,
+#jv-container[data-tab="raw"] #jv-mobile-filter-btn,
+#jv-container:not([data-tab="json"]) #jv-collapse-all,
+#jv-container:not([data-tab="json"]) #jv-expand-all {
+  display: none;
+}
+
+.jv-mobile-field {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  min-width: 0;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--jv-surface);
+  border-radius: 8px;
+  background: var(--jv-bg);
+  color: var(--jv-subtext);
+}
+
+#jv-mobile-filter-input {
+  font-size: 16px;
+}
+
+#jv-mobile-filter-done {
+  height: 32px;
+  padding: 0 4px;
+  color: var(--jv-accent);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Touch and narrow screens: taller bar, larger targets */
+@container jv (max-width: 639px) {
+  #jv-bar {
+    height: 44px;
+    font-size: 13px;
+  }
+
+  .jv-tab {
+    height: 32px;
+    padding: 0 10px;
+  }
+
+  .jv-btn {
+    height: 32px;
+    min-width: 32px;
+  }
+
+  #jv-filter-wrap {
+    height: 32px;
+  }
+
+  /* 16px keeps iOS Safari from zooming on focus */
+  #jv-filter {
+    font-size: 16px;
+  }
+}
+
+/* Narrow screens: icon-only actions and a dedicated search row */
+@container jv (max-width: 639px) {
+  #jv-bar-main {
+    gap: 4px;
+  }
+
+  .jv-tab {
+    padding: 0 8px;
+  }
+
+  #jv-filter-wrap,
+  #jv-size,
+  #jv-container[data-tab] .jv-btn-label {
+    display: none;
+  }
+
+  #jv-container:not([data-tab="raw"]) #jv-mobile-filter-btn {
+    display: inline-flex;
+  }
+
+  .jv-btn {
+    padding: 0;
+  }
+}
+
+@container jv (max-width: 359px) {
+  #jv-bar {
+    padding-right: max(8px, env(safe-area-inset-right));
+    padding-left: max(8px, env(safe-area-inset-left));
+  }
+
+  #jv-bar-main {
+    gap: 2px;
+  }
+
+  .jv-tab {
+    padding: 0 6px;
+  }
+
+  .jv-btn {
+    min-width: 28px;
+  }
+}
+
+/* ---------- Panels ---------- */
+
+#jv-content {
+  box-sizing: border-box;
+  padding: 14px max(20px, env(safe-area-inset-right)) calc(48px + env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+}
+
+@container jv (max-width: 639px) {
+  #jv-content {
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-left: max(12px, env(safe-area-inset-left));
+  }
+}
+
+.jv-notice {
+  margin: 2px 0;
+  color: var(--jv-subtext);
+  font-family: var(--jv-font-ui);
+  font-size: 13px;
+}
+
+#jv-tree {
+  font-family: var(--jv-font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+#jv-raw {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-family: var(--jv-font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--jv-text);
+}
+
+/* ---------- Headers ---------- */
+
+.jv-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  box-sizing: border-box;
+  height: 24px;
+  margin: 0 0 12px;
+  padding: 0 10px;
+  border: 1px solid var(--jv-surface);
+  border-radius: 999px;
+  background: var(--jv-mantle);
+  color: var(--jv-text);
+  font-family: var(--jv-font-mono);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.jv-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--jv-dim);
+}
+
+.jv-status-2xx .jv-status-dot {
+  background: var(--jv-ok);
+}
+
+.jv-status-3xx .jv-status-dot {
+  background: var(--jv-warn);
+}
+
+.jv-status-error .jv-status-dot {
+  background: var(--jv-error);
+}
+
+.jv-headers-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--jv-font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.jv-headers-table th,
+.jv-headers-table td {
+  padding: 5px 0;
+  border-top: 1px solid var(--jv-mantle);
+  text-align: left;
+  vertical-align: top;
+}
+
+.jv-headers-table th {
+  width: 1%;
+  padding-right: 24px;
+  color: var(--jv-key);
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.jv-headers-table td {
+  color: var(--jv-string);
+  word-break: break-all;
+}
+
+@container jv (max-width: 639px) {
+  .jv-headers-table,
+  .jv-headers-table tbody,
+  .jv-headers-table tr,
+  .jv-headers-table th,
+  .jv-headers-table td {
+    display: block;
+    width: auto;
+  }
+
+  .jv-headers-table tr {
+    padding: 6px 0;
+    border-top: 1px solid var(--jv-mantle);
+  }
+
+  .jv-headers-table th,
+  .jv-headers-table td {
+    padding: 0;
+    border: 0;
+    white-space: normal;
+    word-break: break-all;
+  }
+}
+
+/* ---------- Tree ---------- */
+
+.jv-node {
+  padding-left: 18px;
+}
+
+.jv-node.jv-root {
+  padding-left: 0;
+}
+
+.jv-line {
+  display: flex;
+  align-items: baseline;
+  min-height: 22px;
+  border-radius: 3px;
+}
+
+@media (hover: hover) {
+  .jv-line:hover {
+    background-color: var(--jv-hover);
+  }
+}
+
+.jv-toggle {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  text-align: center;
+  font-size: 9px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  color: var(--jv-dim);
+  margin-right: 4px;
+}
+
+.jv-toggle.collapsed {
+  transform: rotate(-90deg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .jv-toggle {
+    transition: transform 0.1s ease;
+  }
+}
+
+.jv-toggle-placeholder {
+  display: inline-block;
+  width: 18px;
+}
+
+.jv-key {
+  color: var(--jv-key);
+  margin-right: 3px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Keys are already green, so the copy confirmation is a brief tint */
+.jv-key.jv-copied {
+  background-color: color-mix(in srgb, var(--jv-ok) 20%, transparent);
+  transition: none;
+}
+
+.jv-colon {
+  color: var(--jv-punct);
+  margin-right: 6px;
+}
+
+.jv-bracket {
+  color: var(--jv-punct);
+}
+
+.jv-ellipsis {
+  display: none;
+  color: var(--jv-dim);
+  cursor: pointer;
+  background: var(--jv-hover);
+  padding: 0 4px;
+  border-radius: 3px;
+  margin: 0 4px;
+  font-style: italic;
+}
+
+.jv-collapsed > .jv-line .jv-ellipsis {
+  display: inline;
+}
+
+.jv-string {
+  color: var(--jv-string);
+  word-break: break-all;
+}
+
+.jv-string a {
+  color: var(--jv-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.jv-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(128, 128, 128, 0.4);
+  vertical-align: middle;
+}
+
+.jv-timestamp:hover {
+  text-decoration: underline dotted var(--jv-dim);
+  text-underline-offset: 3px;
+  cursor: help;
+}
+
+.jv-number {
+  color: var(--jv-number);
+  font-variant-numeric: tabular-nums;
+}
+
+.jv-boolean {
+  color: var(--jv-boolean);
+  font-style: italic;
+}
+
+.jv-null {
+  color: var(--jv-null);
+  font-style: italic;
+}
+
+.jv-comma {
+  color: var(--jv-punct);
+}
+
+/* While filtering, the last visible sibling drops its trailing comma */
+.jv-tail > .jv-line:last-child > .jv-comma {
+  display: none;
+}
+
+/* The demo ends with the window, not a page */
+#jv-content {
+  padding-bottom: 20px;
+}
