@@ -1,6 +1,6 @@
 # Pretty Jason
 
-Yet another pretty JSON browser extension.
+Yet another pretty JSON browser extension. For Safari on Mac, iPhone and iPad.
 
 ## Features
 
@@ -11,6 +11,6 @@ Yet another pretty JSON browser extension.
 - Clickable URLs, including root-relative paths
 - Click a key to copy its path; Option-click to copy its value
 - Color swatches and timestamp tooltips
-- JSON Lines (NDJSON) support
+- JSON Lines, when served as plain text
 - Payload size at a glance
 - One-click copy

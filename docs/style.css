@@ -1,6 +1,7 @@
 /* Pretty Jason's site in the extension's GitHub Primer palette, light and dark,
-   with the icon's berry rose as the accent.
-   System fonts only, and nothing loaded from anywhere else. */
+   with the icon's berry rose as the accent, on faint rose graph paper.
+   Type is all system: sans for text, the rounded face for headings, mono for
+   code. Nothing loads from anywhere else. */
 
 :root {
   color-scheme: light dark;
@@ -10,20 +11,44 @@
   --text: #1f2328;
   --subtext: #59636e;
   --accent: #b91c4b;
-  --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --petal: #e8477a;
+  --grid: rgb(185 28 75 / 0.04);
+  --grid-major: rgb(185 28 75 / 0.075);
+  --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --rounded: ui-rounded, "SF Pro Rounded", var(--sans);
   --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --blossom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-104 -104 208 208'%3E%3Cmask id='m'%3E%3Cg fill='%23fff'%3E%3Ccircle cy='-56' r='46'/%3E%3Ccircle cx='53' cy='-17' r='46'/%3E%3Ccircle cx='33' cy='45' r='46'/%3E%3Ccircle cx='-33' cy='45' r='46'/%3E%3Ccircle cx='-53' cy='-17' r='46'/%3E%3C/g%3E%3Ccircle r='22'/%3E%3C/mask%3E%3Crect x='-104' y='-104' width='208' height='208' mask='url(%23m)'/%3E%3C/svg%3E");
 }
 
+/* Dark follows the system unless the theme switch (theme.js) picks one */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --base: #0d1117;
     --raised: #161b22;
     --line: #30363d;
     --text: #e6edf3;
     --subtext: #8b949e;
     --accent: #f47296;
+    --petal: #f47296;
+    --grid: rgb(244 114 150 / 0.045);
+    --grid-major: rgb(244 114 150 / 0.085);
   }
 }
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --base: #0d1117;
+  --raised: #161b22;
+  --line: #30363d;
+  --text: #e6edf3;
+  --subtext: #8b949e;
+  --accent: #f47296;
+  --petal: #f47296;
+  --grid: rgb(244 114 150 / 0.045);
+  --grid-major: rgb(244 114 150 / 0.085);
+}
+
+:root[data-theme="light"] { color-scheme: light; }
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -33,15 +58,36 @@ html {
 }
 
 body {
+  position: relative;
   margin: 0;
   background: var(--base);
   color: var(--text);
-  font: 400 1.0625rem/1.6 var(--sans);
+  font: 400 1rem/1.6 var(--sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Graph paper: a 16px grid with a stronger line every fifth cell, strongest
+   behind the top of the page and fading out to the sides and below */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+  background-position: 50% 0;
+  -webkit-mask-image: radial-gradient(75% 52rem at 50% 0, #000 25%, transparent);
+  mask-image: radial-gradient(75% 52rem at 50% 0, #000 25%, transparent);
+}
+
 .page {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -57,6 +103,8 @@ main { flex: 1; }
 
 h1, h2 {
   color: var(--text);
+  font-family: var(--rounded);
+  font-weight: 700;
   line-height: 1.2;
   text-wrap: balance;
 }
@@ -81,11 +129,41 @@ a:focus-visible {
 
 code {
   font-family: var(--mono);
-  font-size: 0.875em;
+  font-size: 0.9em;
   background: var(--raised);
   border-radius: 5px;
   padding: 0.1em 0.35em;
 }
+
+/* Theme switch, added by theme.js */
+
+.theme-toggle {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.25rem;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--base);
+  color: var(--subtext);
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.theme-toggle svg { display: block; }
 
 /* Home */
 
@@ -106,25 +184,23 @@ code {
 .hero h1 {
   margin: 0 0 0.5rem;
   font-size: 2.75rem;
-  font-weight: 700;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.01em;
 }
 
 .lede {
   max-width: 27rem;
   margin: 0 auto;
   color: var(--subtext);
-  font-size: 1.25rem;
-  line-height: 1.45;
   text-wrap: balance;
 }
 
 .lede.lead {
   margin-bottom: 0.5rem;
   color: var(--text);
+  font-family: var(--rounded);
   font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-weight: 500;
+  line-height: 1.35;
 }
 
 .links {
@@ -138,12 +214,23 @@ code {
 .status {
   display: inline-block;
   margin: 0;
-  padding: 0.35rem 0.9rem;
+  padding: 0.4rem 0.875rem;
   border: 1px solid var(--line);
   border-radius: 999px;
+  background: var(--base);
   color: var(--subtext);
-  font-size: 0.9375rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.5;
 }
+
+a.status {
+  color: var(--text);
+  text-decoration: none;
+}
+
+a.status:hover { border-color: var(--accent); }
+a.status:focus-visible { border-radius: 999px; }
 
 .hint {
   margin: -2rem 0 3rem;
@@ -161,27 +248,25 @@ code {
 .points h2,
 .install h2 {
   margin: 0 0 0.35rem;
-  font-size: 1.0625rem;
-  font-weight: 600;
+  font-size: 1.25rem;
 }
 
+/* The blossom from the icon */
 .points h2::before {
   content: "";
   display: block;
-  width: 1.75rem;
-  height: 3px;
-  margin-bottom: 0.85rem;
-  border-radius: 2px;
-  background: var(--accent);
+  width: 18px;
+  height: 18px;
+  margin-bottom: 0.75rem;
+  background: var(--petal);
+  -webkit-mask: var(--blossom) center / contain no-repeat;
+  mask: var(--blossom) center / contain no-repeat;
 }
 
 .points p { margin: 0; }
 
 .install { max-width: 40rem; padding: 1rem 0 2rem; }
 .install p { margin: 0 0 0.5rem; }
-.install ul { margin: 0; padding-left: 1.25rem; }
-.install li { margin-bottom: 0.5rem; }
-.install li::marker { color: var(--accent); }
 
 /* Privacy and Support */
 
@@ -191,7 +276,9 @@ code {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  font-weight: 600;
+  font-family: var(--rounded);
+  font-size: 1.125rem;
+  font-weight: 700;
   text-decoration: none;
 }
 
@@ -206,15 +293,13 @@ code {
 
 .doc h1 {
   margin: 0 0 0.25rem;
-  font-size: 2.25rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: 2.5rem;
+  letter-spacing: -0.01em;
 }
 
 .doc h2 {
   margin: 2.25rem 0 0.5rem;
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.375rem;
 }
 
 .doc p,
@@ -227,11 +312,14 @@ code {
 .meta,
 .intro { color: var(--subtext); }
 
-.meta { margin: 0 0 1.75rem; }
+.meta {
+  margin: 0 0 1.75rem;
+  font-size: 0.875rem;
+}
 
 .doc h1 + .intro { margin-top: 1rem; }
 
-.intro { font-size: 1.1875rem; line-height: 1.5; }
+.intro { font-size: 1.0625rem; line-height: 1.6; }
 
 /* Footer */
 
@@ -244,7 +332,7 @@ footer {
   padding: 1.5rem 0 2.5rem;
   border-top: 1px solid var(--line);
   color: var(--subtext);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
 }
 
 footer .owner { margin-right: auto; }

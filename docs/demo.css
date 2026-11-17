@@ -42,8 +42,10 @@
   --jv-accent: var(--jv-link);
 }
 
+/* The demo's Auto follows the page, which follows the system unless the
+   site's theme switch picks Light or Dark */
 @media (prefers-color-scheme: dark) {
-  .jv-demo:not([data-theme="light"]) {
+  :root:not([data-theme="light"]) .jv-demo:not([data-theme="light"]) {
     color-scheme: dark;
     --jv-bg: #0d1117;
     --jv-mantle: #161b22;
@@ -66,7 +68,8 @@
   }
 }
 
-.jv-demo[data-theme="dark"] {
+.jv-demo[data-theme="dark"],
+:root[data-theme="dark"] .jv-demo:not([data-theme="light"]) {
   /* GitHub Primer Dark */
   color-scheme: dark;
   --jv-bg: #0d1117;
@@ -118,8 +121,12 @@
   width: 11px;
   height: 11px;
   border-radius: 50%;
-  background: var(--jv-surface);
+  box-shadow: inset 0 0 0 0.5px rgb(0 0 0 / 0.15);
 }
+
+.jv-lights span:nth-child(1) { background: #ff5f57; }
+.jv-lights span:nth-child(2) { background: #febc2e; }
+.jv-lights span:nth-child(3) { background: #28c840; }
 
 .jv-address {
   flex: 1;
@@ -447,6 +454,32 @@
   }
 }
 
+/* The same for touch screens at any width, which a container query can't ask */
+@media (pointer: coarse) {
+  #jv-bar {
+    height: 44px;
+    font-size: 13px;
+  }
+
+  .jv-tab {
+    height: 32px;
+    padding: 0 10px;
+  }
+
+  .jv-btn {
+    height: 32px;
+    min-width: 32px;
+  }
+
+  #jv-filter-wrap {
+    height: 32px;
+  }
+
+  #jv-filter {
+    font-size: 16px;
+  }
+}
+
 /* Narrow screens: icon-only actions and a dedicated search row */
 @container jv (max-width: 639px) {
   #jv-bar-main {
@@ -705,8 +738,24 @@
   font-style: italic;
 }
 
-.jv-collapsed > .jv-line .jv-ellipsis {
+.jv-fold-close {
+  display: none;
+}
+
+.jv-collapsed > .jv-line .jv-ellipsis,
+.jv-collapsed > .jv-line .jv-fold-close {
   display: inline;
+}
+
+.jv-collapsed > .jv-close-line {
+  display: none;
+}
+
+/* A folded branch inside another folded branch is skipped by its ancestor already.
+   Letting it skip its own content too makes WebKit keep its expanded height as a gap
+   once the ancestor reopens. It still carries hidden=until-found for find-in-page. */
+.jv-collapsed .jv-collapsed > .jv-children[hidden] {
+  content-visibility: visible;
 }
 
 .jv-string {
@@ -730,10 +779,33 @@
   vertical-align: middle;
 }
 
+.jv-timestamp {
+  position: relative;
+}
+
 .jv-timestamp:hover {
   text-decoration: underline dotted var(--jv-dim);
   text-underline-offset: 3px;
-  cursor: help;
+}
+
+/* Instant tooltip. It opens above the value, so it can't run off the bottom of the page. */
+.jv-timestamp:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 0;
+  z-index: 1001;
+  width: max-content;
+  padding: 4px 8px;
+  border: 1px solid var(--jv-surface);
+  border-radius: 6px;
+  background: var(--jv-mantle);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+  color: var(--jv-text);
+  font: 12px/1.5 var(--jv-font-ui);
+  white-space: pre;
+  word-break: normal;
+  pointer-events: none;
 }
 
 .jv-number {
@@ -756,7 +828,7 @@
 }
 
 /* While filtering, the last visible sibling drops its trailing comma */
-.jv-tail > .jv-line:last-child > .jv-comma {
+.jv-tail > .jv-line .jv-comma {
   display: none;
 }
 

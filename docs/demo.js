@@ -24,15 +24,15 @@
       link: 'oklch(55% 0.2 255)',
       modes: ['auto', 'light', 'dark']
     },
-    browsers: [
-      { id: 'safari', platforms: ['macOS', 'iOS', 'iPadOS'], manifest: 3 },
-      { id: 'chrome', platforms: ['macOS', 'Windows', 'Linux'], manifest: 3 },
-      { id: 'firefox', platforms: ['macOS', 'Windows', 'Linux'], manifest: 3 }
+    platforms: [
+      { id: 'macos', browser: 'safari', minimum: '12.0' },
+      { id: 'ios', browser: 'safari', minimum: '17.0' },
+      { id: 'ipados', browser: 'safari', minimum: '17.0' }
     ],
-    formats: ['json', 'ndjson', 'jsonl']
+    formats: ['json', 'jsonl']
   };
   // Folded on load, to show item counts
-  const COLLAPSED_AT_START = ['theme.modes', 'browsers[1]', 'browsers[2]'];
+  const COLLAPSED_AT_START = ['theme.modes', 'platforms[1]', 'platforms[2]'];
 
   const BASE_URL = 'https://api.example.com/v1/extensions/1042';
   const rawText = JSON.stringify(parsedData);
@@ -68,6 +68,7 @@
   };
 
   const svg = (body) => `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+  // Icons from Lucide, ISC licence (search, check and moon derived from Feather, MIT); see lucide-LICENSE.txt
   const ICONS = {
     search: svg('<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>'),
     collapse: svg('<path d="m7 20 5-5 5 5"/><path d="m7 4 5 5 5-5"/>'),
@@ -262,7 +263,9 @@
   }
 
   const COLOR = /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$|^(?:rgb|hsl|oklch)a?\([^)]+\)$/i;
-  const ISO_DATE = /^\d{4}-\d{2}-\d{2}(?:[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:?\d{2})?)?$/;
+  // Needs a time: a date-only string gains nothing from a tooltip, and parsing it as
+  // midnight UTC would show the wrong local day west of Greenwich
+  const ISO_DATETIME = /^\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:?\d{2})?$/;
   // Unix epochs between 2000-01-01 and 2100-01-01
   const EPOCH_MIN = 946684800;
   const EPOCH_MAX = 4102444800;
@@ -279,7 +282,7 @@
     if (typeof value === 'number') {
       if (value >= EPOCH_MIN && value <= EPOCH_MAX) date = new Date(value * 1000);
       else if (Number.isInteger(value) && value >= EPOCH_MIN * 1000 && value <= EPOCH_MAX * 1000) date = new Date(value);
-    } else if (typeof value === 'string' && ISO_DATE.test(value)) {
+    } else if (typeof value === 'string' && ISO_DATETIME.test(value)) {
       date = new Date(value);
     }
     return date && !Number.isNaN(date.getTime()) ? date : null;
@@ -372,6 +375,14 @@
       });
       line.appendChild(ellipsis);
 
+      const closeChar = isArray ? ']' : '}';
+      const hasComma = !isLast && !isRoot;
+
+      // While folded, the bracket and comma close the opening line: { 4 keys },
+      const foldClose = el('span', { className: 'jv-fold-close' }, [el('span', { className: 'jv-bracket', text: closeChar })]);
+      if (hasComma) foldClose.append(el('span', { className: 'jv-comma', text: ',' }));
+      line.appendChild(foldClose);
+
       const childrenContainer = document.createElement('div');
       childrenContainer.className = 'jv-children';
       childrenContainer.addEventListener('beforematch', onBeforeMatch);
@@ -383,17 +394,17 @@
       node.appendChild(childrenContainer);
 
       const closeLine = document.createElement('div');
-      closeLine.className = 'jv-line';
+      closeLine.className = 'jv-line jv-close-line';
       const closePlaceholder = document.createElement('span');
       closePlaceholder.className = 'jv-toggle-placeholder';
       closeLine.appendChild(closePlaceholder);
 
       const closeBracket = document.createElement('span');
       closeBracket.className = 'jv-bracket';
-      closeBracket.textContent = isArray ? ']' : '}';
+      closeBracket.textContent = closeChar;
       closeLine.appendChild(closeBracket);
 
-      if (!isLast && !isRoot) {
+      if (hasComma) {
         const comma = document.createElement('span');
         comma.className = 'jv-comma';
         comma.textContent = ',';
@@ -435,7 +446,7 @@
       const date = timestampDate(value);
       if (date) {
         valSpan.classList.add('jv-timestamp');
-        valSpan.title = `${date.toISOString()} · Local: ${localDateFormat.format(date)} (${relativeTime(date)})`;
+        valSpan.dataset.tooltip = `${date.toISOString()}\nLocal: ${localDateFormat.format(date)} (${relativeTime(date)})`;
       }
 
       line.appendChild(valSpan);
