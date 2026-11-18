@@ -6,35 +6,21 @@
   const demo = document.getElementById('demo');
   if (!demo) return;
 
-  // Timestamps are relative to now so their hover tooltips stay recent
   const now = Date.now();
   const parsedData = {
-    id: 1042,
+    id: 13,
     name: 'Pretty Jason',
-    tagline: 'Yet another pretty JSON browser extension.',
     open_source: true,
-    sponsor: null,
-    self: '/v1/extensions/1042',
+    telemetry: null,
     repository: 'https://github.com/lineofflight/pretty-jason',
-    released_at: new Date(now - 3 * 86400000).toISOString(),
-    checked: Math.floor(now / 1000) - 2 * 3600,
+    released_at: '2026-11-13T13:13:13Z',
     theme: {
       accent: '#b91c4b',
-      ok: '#2da44e',
-      link: 'oklch(55% 0.2 255)',
-      modes: ['auto', 'light', 'dark']
-    },
-    platforms: [
-      { id: 'macos', browser: 'safari', minimum: '12.0' },
-      { id: 'ios', browser: 'safari', minimum: '17.0' },
-      { id: 'ipados', browser: 'safari', minimum: '17.0' }
-    ],
-    formats: ['json', 'jsonl']
+      link: 'oklch(55% 0.2 255)'
+    }
   };
-  // Folded on load, to show item counts
-  const COLLAPSED_AT_START = ['theme.modes', 'platforms[1]', 'platforms[2]'];
 
-  const BASE_URL = 'https://api.example.com/v1/extensions/1042';
+  const BASE_URL = 'https://lineofflight.dev';
   const rawText = JSON.stringify(parsedData);
   const rawBytes = new Blob([rawText]).size;
 
@@ -467,9 +453,6 @@
   treeContainer.appendChild(rootNode);
 
   const containers = [...treeContainer.querySelectorAll('.jv-children')].map((children) => children.parentElement);
-  for (const node of containers) {
-    if (COLLAPSED_AT_START.includes(node.dataset.path)) setNodeCollapsed(node, true);
-  }
 
   function childNodesOf(node) {
     const children = node.querySelector(':scope > .jv-children');

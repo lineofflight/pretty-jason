@@ -1,7 +1,6 @@
-/* Pretty Jason's site in the extension's GitHub Primer palette, light and dark,
-   with the icon's berry rose as the accent, on faint rose graph paper.
-   Type is all system: sans for text, the rounded face for headings, mono for
-   code. Nothing loads from anywhere else. */
+/* Pretty Jason's site in the extension's GitHub Primer palette, light and dark.
+   Type is all system: sans for text and headings, mono for code. Nothing
+   loads from anywhere else. */
 
 :root {
   color-scheme: light dark;
@@ -11,13 +10,8 @@
   --text: #1f2328;
   --subtext: #59636e;
   --accent: #b91c4b;
-  --petal: #e8477a;
-  --grid: rgb(185 28 75 / 0.04);
-  --grid-major: rgb(185 28 75 / 0.075);
   --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --rounded: ui-rounded, "SF Pro Rounded", var(--sans);
   --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-  --blossom: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-104 -104 208 208'%3E%3Cmask id='m'%3E%3Cg fill='%23fff'%3E%3Ccircle cy='-56' r='46'/%3E%3Ccircle cx='53' cy='-17' r='46'/%3E%3Ccircle cx='33' cy='45' r='46'/%3E%3Ccircle cx='-33' cy='45' r='46'/%3E%3Ccircle cx='-53' cy='-17' r='46'/%3E%3C/g%3E%3Ccircle r='22'/%3E%3C/mask%3E%3Crect x='-104' y='-104' width='208' height='208' mask='url(%23m)'/%3E%3C/svg%3E");
 }
 
 /* Dark follows the system unless the theme switch (theme.js) picks one */
@@ -29,9 +23,6 @@
     --text: #e6edf3;
     --subtext: #8b949e;
     --accent: #f47296;
-    --petal: #f47296;
-    --grid: rgb(244 114 150 / 0.045);
-    --grid-major: rgb(244 114 150 / 0.085);
   }
 }
 
@@ -43,9 +34,6 @@
   --text: #e6edf3;
   --subtext: #8b949e;
   --accent: #f47296;
-  --petal: #f47296;
-  --grid: rgb(244 114 150 / 0.045);
-  --grid-major: rgb(244 114 150 / 0.085);
 }
 
 :root[data-theme="light"] { color-scheme: light; }
@@ -58,32 +46,12 @@ html {
 }
 
 body {
-  position: relative;
   margin: 0;
   background: var(--base);
   color: var(--text);
   font: 400 1rem/1.6 var(--sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* Graph paper: a 16px grid with a stronger line every fifth cell, strongest
-   behind the top of the page and fading out to the sides and below */
-body::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(var(--grid-major) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
-  background-position: 50% 0;
-  -webkit-mask-image: radial-gradient(75% 52rem at 50% 0, #000 25%, transparent);
-  mask-image: radial-gradient(75% 52rem at 50% 0, #000 25%, transparent);
 }
 
 .page {
@@ -99,14 +67,23 @@ body::before {
 
 main { flex: 1; }
 
-.page.home { max-width: 60rem; }
+.page.home { max-width: 52rem; }
 
 h1, h2 {
   color: var(--text);
-  font-family: var(--rounded);
-  font-weight: 700;
-  line-height: 1.2;
   text-wrap: balance;
+}
+
+h1 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+h2 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
 }
 
 p, li { text-wrap: pretty; }
@@ -114,12 +91,10 @@ p, li { text-wrap: pretty; }
 a {
   color: inherit;
   text-decoration-line: underline;
-  text-decoration-color: var(--accent);
-  text-decoration-thickness: 0.1em;
-  text-underline-offset: 0.22em;
+  text-decoration-color: var(--line);
+  text-decoration-thickness: from-font;
+  text-underline-offset: 0.2em;
 }
-
-a:hover { text-decoration-thickness: 0.18em; }
 
 a:focus-visible {
   outline: 2px solid var(--accent);
@@ -153,11 +128,6 @@ code {
   cursor: pointer;
 }
 
-.theme-toggle:hover {
-  border-color: var(--accent);
-  color: var(--text);
-}
-
 .theme-toggle:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -178,62 +148,62 @@ code {
   height: 104px;
   margin: 0 auto 1.5rem;
   border-radius: 22.5%;
-  filter: drop-shadow(0 8px 18px rgb(143 20 71 / 0.22));
+  filter: drop-shadow(0 6px 16px rgb(0 0 0 / 0.1));
 }
 
 .hero h1 {
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.75rem;
   font-size: 2.75rem;
-  letter-spacing: -0.01em;
 }
 
 .lede {
   max-width: 27rem;
   margin: 0 auto;
   color: var(--subtext);
+  font-size: 1rem;
   text-wrap: balance;
 }
 
 .lede.lead {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   color: var(--text);
-  font-family: var(--rounded);
-  font-size: 1.5rem;
-  font-weight: 500;
-  line-height: 1.35;
+  font-size: 1.125rem;
 }
 
 .links {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 0.75rem;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
   margin: 1.75rem 0 0;
 }
 
 .status {
-  display: inline-block;
-  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   padding: 0.4rem 0.875rem;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--base);
-  color: var(--subtext);
+  color: var(--text);
   font-size: 0.8125rem;
   font-weight: 500;
   line-height: 1.5;
-}
-
-a.status {
-  color: var(--text);
   text-decoration: none;
 }
 
-a.status:hover { border-color: var(--accent); }
-a.status:focus-visible { border-radius: 999px; }
+.status svg { flex-shrink: 0; }
+.status:focus-visible { border-radius: 999px; }
+
+.soon {
+  margin: 0;
+  color: var(--subtext);
+  font-size: 0.8125rem;
+}
 
 .hint {
-  margin: -2rem 0 3rem;
+  margin: 0 auto 3.5rem;
   color: var(--subtext);
   font-size: 0.875rem;
   text-align: center;
@@ -241,8 +211,7 @@ a.status:focus-visible { border-radius: 999px; }
 
 .points {
   display: grid;
-  gap: 2rem;
-  padding: 1rem 0 2rem;
+  gap: 1.75rem;
 }
 
 .points h2,
@@ -251,21 +220,14 @@ a.status:focus-visible { border-radius: 999px; }
   font-size: 1.25rem;
 }
 
-/* The blossom from the icon */
-.points h2::before {
-  content: "";
-  display: block;
-  width: 18px;
-  height: 18px;
-  margin-bottom: 0.75rem;
-  background: var(--petal);
-  -webkit-mask: var(--blossom) center / contain no-repeat;
-  mask: var(--blossom) center / contain no-repeat;
-}
-
 .points p { margin: 0; }
 
-.install { max-width: 40rem; padding: 1rem 0 2rem; }
+.install {
+  margin-top: 1.5rem;
+  padding: 2rem 0 1rem;
+  border-top: 1px solid var(--line);
+}
+
 .install p { margin: 0 0 0.5rem; }
 
 /* Privacy and Support */
@@ -276,7 +238,6 @@ a.status:focus-visible { border-radius: 999px; }
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  font-family: var(--rounded);
   font-size: 1.125rem;
   font-weight: 700;
   text-decoration: none;
@@ -294,7 +255,6 @@ a.status:focus-visible { border-radius: 999px; }
 .doc h1 {
   margin: 0 0 0.25rem;
   font-size: 2.5rem;
-  letter-spacing: -0.01em;
 }
 
 .doc h2 {
@@ -337,10 +297,22 @@ footer {
 
 footer .owner { margin-right: auto; }
 
-footer a { text-decoration-color: var(--line); }
-footer a:hover { text-decoration-color: var(--accent); }
+/* Hover only where there is a pointer that hovers */
+@media (hover: hover) {
+  a:hover { text-decoration-color: var(--text); }
+
+  .theme-toggle:hover {
+    border-color: var(--accent);
+    color: var(--text);
+  }
+
+  .status:hover { border-color: var(--accent); }
+}
+
+@media (min-width: 38rem) {
+  .points { grid-template-columns: repeat(2, 1fr); gap: 1.75rem 2.25rem; }
+}
 
 @media (min-width: 46rem) {
-  .points { grid-template-columns: repeat(3, 1fr); gap: 2.25rem; }
   .hero h1 { font-size: 3.25rem; }
 }

@@ -5,7 +5,7 @@
 .jv-demo {
   container: jv / inline-size;
   color-scheme: light;
-  margin: 0 auto 3rem;
+  margin: 0 auto 0.75rem;
   overflow: hidden;
   border: 1px solid var(--jv-surface);
   border-radius: 12px;
@@ -104,8 +104,7 @@
 .jv-chrome {
   display: flex;
   align-items: center;
-  gap: 12px;
-  height: 40px;
+  height: 30px;
   padding: 0 12px;
   background: var(--jv-mantle);
   border-bottom: 1px solid var(--jv-surface);
@@ -113,49 +112,19 @@
 
 .jv-lights {
   display: flex;
-  gap: 7px;
-  flex-shrink: 0;
+  gap: 6px;
 }
 
+/* Muted dots, so they don't compete with the syntax colors */
 .jv-lights span {
-  width: 11px;
-  height: 11px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  box-shadow: inset 0 0 0 0.5px rgb(0 0 0 / 0.15);
+  background: var(--jv-surface);
 }
 
-.jv-lights span:nth-child(1) { background: #ff5f57; }
-.jv-lights span:nth-child(2) { background: #febc2e; }
-.jv-lights span:nth-child(3) { background: #28c840; }
-
-.jv-address {
-  flex: 1;
-  min-width: 0;
-  max-width: 26rem;
-  height: 24px;
-  margin: 0 auto;
-  padding: 0 10px;
-  overflow: hidden;
-  border: 1px solid var(--jv-surface);
-  border-radius: 6px;
-  background: var(--jv-bg);
-  color: var(--jv-subtext);
-  font-family: var(--jv-font-ui);
-  font-size: 12px;
-  line-height: 22px;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* Balances the lights so the address stays centered */
-.jv-chrome::after {
-  content: "";
-  flex-shrink: 0;
-  width: 47px;
-}
-
-#jv-container {
+.jv-demo #jv-container {
+  min-height: 0;
   max-height: 34rem;
   overflow: auto;
   overscroll-behavior: contain;
@@ -833,6 +802,6 @@
 }
 
 /* The demo ends with the window, not a page */
-#jv-content {
-  padding-bottom: 20px;
+.jv-demo #jv-content {
+  padding-bottom: 32px;
 }

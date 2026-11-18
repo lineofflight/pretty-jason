@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pretty Jason</title>
-  <meta name="description" content="Yet another pretty JSON browser extension. For Safari on Mac, iPhone and iPad.">
+  <meta name="description" content="Yet another pretty JSON browser extension. For Safari on Mac, iPhone, and iPad.">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Pretty Jason">
   <meta property="og:title" content="Pretty Jason">
-  <meta property="og:description" content="Yet another pretty JSON browser extension. For Safari on Mac, iPhone and iPad.">
+  <meta property="og:description" content="Yet another pretty JSON browser extension. For Safari on Mac, iPhone, and iPad.">
   <meta property="og:url" content="https://lineofflight.dev/pretty-jason/">
   <meta property="og:image" content="https://lineofflight.dev/pretty-jason/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -30,55 +30,49 @@
         <img src="icon.svg" alt="" width="104" height="104">
         <h1>Pretty Jason</h1>
         <p class="lede lead">Yet another pretty JSON browser extension.</p>
-        <p class="lede">For Safari on Mac, iPhone and iPad.</p>
+        <p class="lede">For Safari on Mac, iPhone, and iPad.</p>
         <div class="links">
-          <p class="status">Coming to the App Store</p>
-          <!-- App Store slot. Once Pretty Jason is live, replace the status line above with the link, for example:
+          <a class="status" href="https://github.com/lineofflight/pretty-jason">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+            Source on GitHub
+          </a>
+          <p class="soon">Coming soon to the App Store</p>
+          <!-- App Store slot. Once Pretty Jason is live, replace the line above with the link, for example:
           <a class="status" href="https://apps.apple.com/app/pretty-jason/idXXXXXXXXXX">Get Pretty Jason on the App Store</a>
           -->
-          <a class="status" href="https://github.com/lineofflight/pretty-jason">Source on GitHub</a>
         </div>
       </header>
 
       <section class="jv-demo" id="demo" aria-label="Live demo">
         <div class="jv-chrome" aria-hidden="true">
           <div class="jv-lights"><span></span><span></span><span></span></div>
-          <div class="jv-address">api.example.com/v1/extensions/1042</div>
         </div>
         <noscript>The live demo needs JavaScript. Nothing else on this site does.</noscript>
       </section>
-      <p class="hint">Fold a branch, click a key, press <code>/</code> to filter, switch the theme.</p>
+      <p class="hint">Click a key to copy its path, option-click an arrow, or press <code>/</code> to filter.</p>
 
       <section class="points">
         <div>
-          <h2>Fast by default</h2>
-          <p>Instant collapsible trees for JSON, plus JSON Lines served as plain text. Option-click an arrow to fold or unfold a whole branch. Folded branches still open when your browser’s own find matches inside.</p>
+          <h2>Tree &amp; search</h2>
+          <p>JSON and plain-text JSON Lines. Option-click an arrow to fold a branch. Browser find still matches inside folded nodes.</p>
         </div>
         <div>
-          <h2>Click to copy paths</h2>
-          <p>Click any key to copy its JavaScript accessor path (<code>response.items[0].id</code>). Option-click a key to copy its value instead.</p>
+          <h2>Copy paths</h2>
+          <p>Click a key to copy its path (<code>items[0].id</code>). Option-click to copy its value.</p>
         </div>
         <div>
-          <h2>Small touches</h2>
-          <p>Inline color swatches, relative-time tooltips on ISO-8601 and Unix timestamps, clickable URLs and root-relative API paths, and a lazy <code>Headers</code> tab.</p>
+          <h2>Inline details</h2>
+          <p>Color swatches, relative-time tooltips on timestamps, clickable URLs and <code>/relative</code> paths, and on-demand HTTP headers.</p>
         </div>
         <div>
-          <h2>GitHub Primer themes</h2>
-          <p>Crisp light and dark palettes from GitHub Primer. <code>Auto</code> follows your system, or pick <code>Light</code> or <code>Dark</code>, with no flash on load.</p>
-        </div>
-        <div>
-          <h2>Mac, iPhone &amp; iPad</h2>
-          <p>Native Safari Web Extension for macOS, iOS, and iPadOS, with a responsive mobile filter bar.</p>
-        </div>
-        <div>
-          <h2>Private by design</h2>
-          <p>Runs on your device with no telemetry or analytics. It only talks to the server you’re already viewing, and only when you open <code>Headers</code>.</p>
+          <h2>Local</h2>
+          <p>Runs on your device with no analytics or external requests. Follows system appearance or pins Light or Dark per site.</p>
         </div>
       </section>
 
       <section class="install" id="install">
         <h2>Install</h2>
-        <p>Until Pretty Jason reaches the App Store, build it from <a href="https://github.com/lineofflight/pretty-jason">the source</a>: open <code>safari/Pretty Jason/Pretty Jason.xcodeproj</code> in Xcode and run the macOS or iOS app, then turn the extension on in Safari’s Extensions settings.</p>
+        <p>Until Pretty Jason is on the App Store, build the Xcode project from <a href="https://github.com/lineofflight/pretty-jason">GitHub</a>, run the app once, and enable the extension in Safari settings.</p>
       </section>
     </main>
 
