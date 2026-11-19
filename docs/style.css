@@ -172,7 +172,8 @@ code {
 
 .links {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   gap: 0.75rem;
   margin: 1.75rem 0 0;
@@ -182,7 +183,7 @@ code {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  padding: 0.4rem 0.875rem;
+  padding: 0.45rem 1rem 0.45rem 0.875rem;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--base);
@@ -196,10 +197,10 @@ code {
 .status svg { flex-shrink: 0; }
 .status:focus-visible { border-radius: 999px; }
 
-.soon {
-  margin: 0;
-  color: var(--subtext);
-  font-size: 0.8125rem;
+.status.primary {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--base);
 }
 
 .hint {
@@ -307,6 +308,12 @@ footer .owner { margin-right: auto; }
   }
 
   .status:hover { border-color: var(--accent); }
+  .status.primary:hover { border-color: var(--text); opacity: 0.88; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .status { transition: border-color 150ms ease-out, opacity 150ms ease-out, transform 150ms ease-out; }
+  .status:active { transform: scale(0.96); }
 }
 
 @media (min-width: 38rem) {
